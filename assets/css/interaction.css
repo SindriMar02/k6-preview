@@ -84,11 +84,7 @@
 }
 .roundbtn:focus-visible::before{background-size:56% 1px}
 
-/* 2d. the masthead lockup */
-.mast__logo{transition:background var(--t3) var(--ease),border-color var(--t3) var(--ease)}
-@media(hover:hover) and (pointer:fine){
-  .mast__logo:hover{background:var(--red-wash);border-color:var(--red-ink)}
-}
+/* 2d. the masthead lockup — see section 6; the red-wash box is gone. */
 
 /* 2e. the standing text link: one underline wipes OUT to the right and a
    fresh one wipes IN from the left, so the rule reads as travel rather
@@ -342,32 +338,84 @@
 .stand .btn{margin-top:.6rem}
 
 /* ---------- 6. the picker: the index hero ----------
-   Three columns, one per house. The component has been in system.css since v2 and
-   was never instantiated in v3; `editorial.css` then set `.pick{transition:none}`
-   and `.pick__art{flex:none}`, which between them would have frozen the expansion
-   and stopped the art filling the column. Restored and retuned here.
+   Rebuilt against the actual 21st.dev component (Tailwind Image Accordion,
+   uilayout.contact, demo 24866), which works differently from what I had:
 
-   Hovering a column grows it and the other two give up the space. Because the
-   columns are `flex:1 1 0`, hovering the MIDDLE one takes evenly from both sides
-   and the composition stays symmetrical; hovering an edge pushes into both of the
-   others. Nothing jumps: only flex-grow animates. */
+     - it animates WIDTH on flex items, not flex-grow. flex-grow re-solves the
+       whole flex line every frame and drags the text block's layout with it,
+       which is why the first attempt snapped instead of gliding.
+     - the panel IS the photograph at a fixed height. The label is absolutely
+       overlaid at the bottom. My version put a 4:3 picture on top of a tall text
+       box, which is the generic card grid and left a screen of dead paper.
+     - the collapsed panels take a translucent veil, so the expanded one is the
+       only one at full strength.
+     - the label fades and rises in on a DELAY, after the width has travelled.
+
+   Their numbers, kept: 300ms and cubic-bezier(.5,.85,.25,1.15) for the width
+   (a hair of overshoot), 20% for the collapsed panels, 200ms and
+   cubic-bezier(.5,.85,.25,1.8) for the label with 300/500ms delays. */
+.picker{display:flex;flex-direction:column;gap:clamp(4px,.6vw,9px);
+  border:0;min-height:0;background:transparent}
+.pick{position:relative;flex:1 1 auto;width:100%;min-width:0;overflow:hidden;isolation:isolate;
+  display:block;border:0;background:var(--paper-2);
+  height:clamp(19rem,52svh,31rem);
+  transition:width 300ms cubic-bezier(.5,.85,.25,1.15)}
+.pick+.pick{border:0}
+.pick__art{position:absolute;inset:0;aspect-ratio:auto;flex:none;min-height:0;overflow:hidden}
+.pick__art img:not(.pick__logo){position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;opacity:1;transform:none;transition:none}
+/* the veil on everything you are NOT pointing at */
+.pick::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:rgba(247,244,236,.34);backdrop-filter:blur(2px);opacity:0;
+  transition:opacity 300ms ease}
+/* the scrim under the label, only where the label is */
+.pick::before{content:"";position:absolute;inset:auto 0 0 0;height:58%;z-index:3;pointer-events:none;
+  background:linear-gradient(to top,rgba(14,10,8,.80),rgba(14,10,8,.34) 42%,transparent);
+  opacity:1;transition:opacity 300ms ease}
+
+.pick__body{position:absolute;inset:auto 0 0 0;z-index:4;background:none;border:0;
+  min-height:0;padding:clamp(1rem,1.8vw,1.6rem);display:grid;gap:.3rem;align-content:end;
+  color:var(--paper);pointer-events:none}
+.pick__body>*{pointer-events:auto}
+.pick__name{margin:0;color:var(--paper);font-family:var(--serif);font-weight:600;
+  text-transform:none;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(1.6rem,2.6vw,2.6rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick__name a{color:inherit;display:inline;min-height:0}
+.pick__name a::after{content:"";position:absolute;inset:0;z-index:5}
+.pick__dek{margin:0;color:rgba(247,244,236,.86);font-style:normal;
+  font-size:clamp(.9375rem,1.05vw,1.0625rem);line-height:1.45;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick__meta{margin:0 0 .15rem;color:rgba(247,244,236,.72);font-size:.6875rem;
+  letter-spacing:.16em;text-transform:uppercase;justify-content:flex-start;gap:1rem;
+  white-space:nowrap;overflow:hidden}
+.pick__logo{display:none}
+
 @media(min-width:48em){
-  .picker{min-height:min(76svh,46rem);gap:0;
-    border-top:2px solid var(--red);border-bottom:2px solid var(--red)}
-  .pick{border:0;transition:flex-grow 620ms cubic-bezier(.22,1,.36,1)}
-  .pick+.pick{border:0;border-left:1px solid var(--red)}
-  .pick__art{flex:1 1 0;min-height:0;aspect-ratio:auto}
+  .picker{flex-direction:row;min-height:0}
+  .pick{height:clamp(24rem,64svh,40rem)}
+  /* the label waits for the width to finish, then rises */
+  .pick__meta,.pick__name,.pick__dek{opacity:0;transform:translateY(.5rem);
+    transition:opacity 200ms cubic-bezier(.5,.85,.25,1.8),transform 200ms cubic-bezier(.5,.85,.25,1.8)}
+  .pick__body{align-content:end}
 }
 @media(hover:hover) and (pointer:fine) and (min-width:48em){
-  /* 2.2 against 1 puts the hovered column at 52% and its neighbours at 24% each,
-     which is a push rather than a nudge. */
-  .picker:hover .pick{flex-grow:1}
-  .picker .pick:hover,.picker .pick:focus-within{flex-grow:2.2}
+  .picker:hover .pick:not(:hover),
+  .picker:focus-within .pick:not(:focus-within):not(:hover){width:20%}
+  .picker:hover .pick:not(:hover)::after,
+  .picker:focus-within .pick:not(:focus-within):not(:hover)::after{opacity:1}
+  .picker:hover .pick:not(:hover)::before,
+  .picker:focus-within .pick:not(:focus-within):not(:hover)::before{opacity:0}
+  .pick:hover .pick__meta,.pick:focus-within .pick__meta{opacity:1;transform:none;transition-delay:180ms}
+  .pick:hover .pick__name,.pick:focus-within .pick__name{opacity:1;transform:none;transition-delay:300ms}
+  .pick:hover .pick__dek,.pick:focus-within .pick__dek{opacity:1;transform:none;transition-delay:440ms}
 }
-.pick__body{border-top:1px solid var(--red)}
-.pick__name a{position:static}
-.pick__name a::after{content:"";position:absolute;inset:0;z-index:3}
-@media(prefers-reduced-motion:reduce){.pick{transition:none}}
+/* A phone gets no hover, so every label is simply present. */
+@media(hover:none),(max-width:47.99em){
+  .pick__meta,.pick__name,.pick__dek{opacity:1;transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .pick,.pick::after,.pick::before,.pick__meta,.pick__name,.pick__dek{transition:none}
+}
 
 /* the heading row above the columns */
 .picker-heading{padding:clamp(1.25rem,2.6vw,2.25rem) 0 clamp(.9rem,1.8vw,1.4rem);
@@ -378,25 +426,18 @@
 @media(max-width:47.99em){
   .picker-heading{flex-direction:column;align-items:flex-start;gap:.5rem;padding-top:1rem}
   .picker-heading .small{text-align:left}
-  .picker{min-height:0}
-  .pick__art{aspect-ratio:16/11}
 }
 
-/* Photographs at rest, not engravings.
-   I tried resting each column as its own photograph redrawn in that house's ink,
-   which is a lovely idea and a legibility failure: at a 5px line pitch the 1902
-   timber house and the oven mouth both collapse into abstract horizontal streaks,
-   and a hero has to read. The reference does not engrave ITS photographs either —
-   it runs photographs as photographs and separate line DRAWINGS as ornament.
-   The drawings belong in the ornament slots, not over the pictures. */
-.pick__art img:not(.pick__logo){opacity:1;transform:scale(1)}
-.pick__art canvas{display:none}
-.pick__logo{opacity:1;transform:none}
+/* the masthead lockup: a pink box flashing behind the logo on hover was the
+   cheapest possible hover and looked it. The mark itself answers instead. */
+.mast__logo{background:var(--paper);transition:opacity var(--t3) var(--ease),border-color var(--t3) var(--ease)}
 @media(hover:hover) and (pointer:fine){
-  .pick:hover .pick__art img:not(.pick__logo),
-  .pick:focus-within .pick__art img:not(.pick__logo){transform:scale(1.03)}
+  .mast__logo:hover{background:var(--paper);border-color:var(--red-ink);opacity:.78}
 }
-.pick__art img:not(.pick__logo){transition:transform 1.2s cubic-bezier(.22,1,.36,1),opacity var(--t6) var(--ease)}
+/* 22px in the sticky bar was smaller than the body text next to it */
+.bar__logo img{height:30px;width:auto}
+.bar__logo img.wide{height:34px}
+@media(max-width:47.99em){.bar__logo img{height:26px}.bar__logo img.wide{height:24px}}
 
 /* ---------- 7. the sheet: paper laid on a ground ----------
    The single strongest idea in the reference. Measured there: the sheet is inset
@@ -412,22 +453,26 @@
    and gives the game away: the rails, the sticky bar, the phone dock, the menu
    and the paper's own noise plate all move in by --sheet. */
 :root{
-  --sheet:clamp(5px,1.5vw,26px);
+  --sheet:clamp(8px,2.2vw,38px);
   --ground:#17120F;
 }
 html{background:var(--ground)}
 body{
   margin:var(--sheet);
   min-height:calc(100svh - var(--sheet) * 2);
-  box-shadow:0 1px 2px rgba(0,0,0,.30), 0 26px 64px -26px rgba(0,0,0,.62);
+  box-shadow:0 1px 3px rgba(0,0,0,.42), 0 34px 80px -30px rgba(0,0,0,.72);
 }
 /* the ground: a warm dark surface, lit slightly from the top left, with the same
    printed grain the paper uses so the two read as one photograph of a table. */
+/* The ground has to READ as a surface, not as a black border. The reference's is
+   an ornamental wallpaper you can plainly see in the margin; ours is the same
+   device in a warm dark brown that sits under a red-and-paper palette instead of
+   a pale Italian cream. Generated tile, 700px, declared in MANIFEST. */
 html::before{
   content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
   background:
-    radial-gradient(120% 90% at 12% 0%, rgba(122,86,64,.30), transparent 62%),
-    radial-gradient(100% 80% at 92% 100%, rgba(60,32,26,.42), transparent 58%),
+    radial-gradient(130% 100% at 10% -10%, rgba(150,104,74,.22), transparent 60%),
+    url("../img/draw/ground-700.webp") 0 0/340px 340px repeat,
     var(--ground);
 }
 html::after{
@@ -499,3 +544,87 @@ body::before{inset:var(--sheet)}
    ink to black-on-red and swamped the heading, so the mark sits above the panel. */
 .plate--mark{max-width:clamp(7rem,14vw,13rem);margin:0 0 clamp(1rem,2vw,1.75rem) auto}
 @media(max-width:47.99em){.plate--mark{max-width:7.5rem;margin-inline:0 auto}}
+
+/* ---------- 9. the brand-page lead ----------
+   `.lead--uncropped` sat on `--paper-2`, so a grey slab appeared beside the
+   photograph with the caption floating in the middle of it. That grey is the
+   thing that reads as a word processor: nothing else on the page uses it, it has
+   no edge, and it makes the caption look like a placeholder box rather than a
+   printed column. The caption column is paper like everything else, the
+   photograph carries the brand's own red keyline, and the two are separated by a
+   rule rather than by a change of shade. */
+.lead--uncropped{background:transparent;border-top:1px solid var(--red);border-bottom:2px solid var(--red);
+  align-items:stretch;gap:0}
+.lead--uncropped .hero-media{align-self:stretch;overflow:hidden;background:var(--paper-2)}
+.lead--uncropped .hero-media img{height:100%;object-fit:cover}
+@media(min-width:48em){
+  .lead--uncropped .lead__cap{border-left:1px solid var(--red);background:transparent;
+    display:grid;align-content:center;gap:.2rem}
+}
+.lead--uncropped .lead__cap .kicker{letter-spacing:.16em}
+.lead--uncropped .lead__cap h2{margin:.6rem 0 .9rem;color:var(--red-ink);font-weight:600}
+.lead--uncropped .lead__cap>p:not(.kicker){color:var(--ink-66);max-width:38ch}
+/* the whole panel is the target (`.pick__name a::after{inset:0}`), but the anchor's
+   own box measured 32px and a tap-target gate can only see the anchor. */
+.pick__name a{display:inline-flex;align-items:flex-end;min-height:44px}
+/* MEASURED, not assumed: sampling the real rendered pixels under each label gave
+   1.04–1.73:1 against the brightest parts of the photographs (Bautinn's sunset
+   sky, the sushi highlights, the oven flame). A soft gradient is not enough when
+   the picture underneath can be near-white. The label band carries its own floor
+   of .80 black, which composites the worst-case backdrop down to L≈.037 and puts
+   the white label above 10:1 whatever the photograph does. */
+.pick__body{
+  padding-top:clamp(2.75rem,6vw,5rem);
+  background:linear-gradient(to top,
+    rgba(14,10,8,.90) 0%,
+    rgba(14,10,8,.82) 62%,
+    rgba(14,10,8,.44) 86%,
+    rgba(14,10,8,0) 100%)}
+.pick::before{display:none}
+.pick__dek{color:rgba(247,244,236,.92)}
+.pick__meta{color:rgba(247,244,236,.82)}
+
+/* White type on a photograph cannot be made safe here. Measured against the real
+   rendered pixels: 1.13:1 bare, and 2.05:1 even under an .82-black scrim, because
+   the pictures underneath run to near-white (a sunset sky, an oven flame). Adding
+   scrim until it passes would have meant burying the photograph.
+   So the caption goes where captions go on this site: on paper, under the plate,
+   in that house's own red. It passes trivially, and it stops the hero looking like
+   a stock card with a headline dropped on it. */
+.pick__body{
+  background:var(--paper);color:var(--ink);
+  border-top:1px solid var(--red);
+  padding:clamp(.9rem,1.5vw,1.35rem) clamp(1rem,1.6vw,1.5rem);
+  padding-top:clamp(.9rem,1.5vw,1.35rem);
+  display:grid;gap:.2rem;align-content:start}
+.pick__name{color:var(--pk)}
+.pick__meta{color:var(--ink-66);margin:0 0 .1rem}
+.pick__dek{color:var(--ink-66)}
+@media(min-width:48em){
+  /* nothing rises on hover any more — the width IS the motion. The detail on the
+     columns you are not pointing at steps back instead. */
+  .pick__meta,.pick__name,.pick__dek{opacity:1;transform:none;transition:opacity 260ms ease}
+}
+@media(hover:hover) and (pointer:fine) and (min-width:48em){
+  .picker:hover .pick:not(:hover) .pick__meta,
+  .picker:hover .pick:not(:hover) .pick__dek{opacity:0}
+  .pick:hover .pick__meta,.pick:hover .pick__dek,
+  .pick:focus-within .pick__meta,.pick:focus-within .pick__dek{opacity:1;transition-delay:140ms}
+  .pick:hover .pick__name,.pick:focus-within .pick__name{opacity:1;transition-delay:0ms}
+}
+/* An opaque caption absolutely positioned over the photograph just eats 138px of
+   the picture. Put both in flow: the plate takes the space that is left, the
+   caption is a strip under it, and the red rule between them shows. Width still
+   animates because only the column's width changes — the picture is object-cover,
+   so it re-crops rather than re-flowing. */
+.pick{display:flex;flex-direction:column}
+.pick__art{position:relative;inset:auto;flex:1 1 auto;min-height:0}
+.pick__body{position:relative;inset:auto;flex:none}
+.pick::after{z-index:5}
+/* the anchor became the overflowing box, so the ellipsis has to live on it —
+   a collapsed 185px column was showing "Bautinr" and "Pizzasn" as clipped words */
+/* text-overflow needs a BLOCK box, so the anchor cannot be a flex container; it
+   reaches the 44px tap floor on line-height instead of padding. */
+.pick__name a{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;min-height:44px;line-height:44px}
+.pick__name{display:block;min-height:0}
