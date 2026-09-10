@@ -95,7 +95,11 @@
       var reserve = st ? st.getBoundingClientRect().width + bw * 0.015 : 0;
       fitLine(w, m, Math.max(0.5, (bw - reserve) / bw) * 0.94, 0.135, '--word-fs');
     });
-    $$('.foot__word').forEach(function (f) { fitLine(f, f, 0.96, 0.145, '--foot-fs'); });
+    /* The footer plate wants the measure, but it needs the SAME cap rule the
+       masthead has. Uncapped, RUB 23 (six glyphs) set at 380px against
+       PIZZASMIDJAN at 174px and the four colophons read as four different papers.
+       Capped, the family sits in a 174-207px band across all four. */
+    $$('.foot__word').forEach(function (f) { fitLine(f, f, 0.92, 0.15, '--foot-fs'); });
     $$('.display, .menuword, .pick__name, .ad__n, .nums b, .sib__n').forEach(fitWord);
   }
 
@@ -252,45 +256,7 @@
 
   /* SRG reference: hero top/top → bottom/top drift; native scrolling keeps touch direct.
      One scheduled read/write pass per scroll, never an idle animation loop. */
-  var tracks=[],drifts=[],bar=null,barControls=[],barShown=null,mastH=0,scrollFrame=0;
-  function buildMarquees(){
-    $$('.ticker').forEach(function(m){
-      var track=$('.ticker__track',m),unit=track&&track.firstElementChild;if(!unit||!track.animate)return;
-      var animation=null,width=0,copies=0,inView=false,paused=false,buttonState="";
-      var button=document.createElement('button');button.type='button';button.className='ticker__toggle';
-      m.removeAttribute('aria-hidden');track.setAttribute('aria-hidden','true');m.appendChild(button);
-      function sync(){
-        var state=String(RM)+String(paused);
-        if(state!==buttonState){buttonState=state;button.hidden=RM;button.textContent=paused?'▶':'Ⅱ';
-          button.setAttribute('aria-label',paused?'Ræsa tilkynningaborða':'Stöðva tilkynningaborða');}
-        if(!animation)return;
-        var shouldPause=RM||paused||!inView||document.hidden;
-        if(shouldPause&&animation.playState!=='paused')animation.pause();
-        else if(!shouldPause&&animation.playState!=='running')animation.play();
-      }
-      function measure(){
-        var next=unit.getBoundingClientRect().width;if(!next)return;
-        var nextCopies=Math.ceil(m.clientWidth/next);
-        if(animation&&Math.abs(next-width)<0.1&&nextCopies===copies){sync();return;}
-        var progress=animation?(Number(animation.currentTime)||0)/(width/28*1000)%1:0;
-        if(animation)animation.cancel();width=next;copies=nextCopies;
-        while(track.children.length>1)track.lastElementChild.remove();
-        for(var i=0;i<copies;i++)track.appendChild(unit.cloneNode(true));
-        animation=track.animate([{transform:'translate3d(0,0,0)'},{transform:'translate3d('+(-width)+'px,0,0)'}],
-          {duration:width/28*1000,iterations:Infinity,easing:'linear'});
-        animation.currentTime=RM?0:progress*(width/28*1000);sync();
-      }
-      button.addEventListener('click',function(){paused=!paused;sync();});
-      if('IntersectionObserver' in window)new IntersectionObserver(function(es){inView=es[0].isIntersecting;sync();}).observe(m);
-      else inView=true;
-      document.addEventListener('visibilitychange',sync);
-      matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',function(e){RM=e.matches;measure();});
-      if('ResizeObserver' in window){var observer=new ResizeObserver(measure);observer.observe(unit);observer.observe(m);}
-      else window.addEventListener('resize',measure,{passive:true});
-      if(document.fonts)document.fonts.ready.then(measure);
-      measure();tracks.push({el:track,frame:m});
-    });
-  }
+  var drifts=[],bar=null,barControls=[],barShown=null,mastH=0,scrollFrame=0;
   function collectDrifts(){
     $$('[data-parallax]').forEach(function(f){var m=$('img,video',f);if(m){m.style.transition='none';drifts.push({frame:f,m:m,hero:false});}});
     $$('[data-hero]').forEach(function(f){var m=$('.hero-media',f);if(m)drifts.push({frame:f,m:m,hero:true});});
@@ -450,7 +416,7 @@
     function statusClock(){clearInterval(statusTimer);if(!document.hidden){liveStatus();statusTimer=setInterval(liveStatus,60000);}}
     document.addEventListener('visibilitychange',statusClock);statusClock();
     bar = $('.bar'); barControls=bar?$$('a,button',bar):[]; var mast = $('.mast'); mastH = mast ? mast.offsetHeight : 0;
-    buildMarquees(); collectDrifts(); onScroll();
+    collectDrifts(); onScroll();
     window.addEventListener('scroll', scheduleScroll, { passive: true });
     var rt, layoutWidth=innerWidth; window.addEventListener('resize', function () {
       if(innerWidth===layoutWidth){scheduleScroll();return;}
@@ -460,8 +426,8 @@
     if(document.fonts && document.fonts.ready) document.fonts.ready.then(prepareMotion);else prepareMotion();
 
     requestAnimationFrame(function () { requestAnimationFrame(function () { document.body.classList.add('is-lit'); }); });
-    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',function(e){RM=e.matches;if(RM){$$('[data-entry-state]').forEach(finishReveal);activeAnimations.forEach(function(a){a.cancel();});drifts.forEach(function(d){d.lastTransform=null;d.m.style.transform='none';});tracks.forEach(function(t){t.el.style.transform='none';});$$('.film video').forEach(function(v){v.pause();});}scheduleScroll();});
-    window.__k6 = { onScroll: onScroll, fitType: fitType, tracks: tracks, drifts: drifts, rm: RM };
+    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',function(e){RM=e.matches;if(RM){$$('[data-entry-state]').forEach(finishReveal);activeAnimations.forEach(function(a){a.cancel();});drifts.forEach(function(d){d.lastTransform=null;d.m.style.transform='none';});$$('.film video').forEach(function(v){v.pause();});}scheduleScroll();});
+    window.__k6 = { onScroll: onScroll, fitType: fitType, drifts: drifts, rm: RM };
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

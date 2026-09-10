@@ -14,11 +14,12 @@
 <link rel="icon" href="assets/img/icons/icon-k6-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="assets/img/icons/icon-k6-512.png" sizes="512x512" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/icons/icon-k6-180.png">
-<link rel="stylesheet" href="assets/css/system.css?v=a8c07ab9">
-<link rel="stylesheet" href="assets/css/editorial.css?v=dbba8318">
-<link rel="stylesheet" href="assets/css/type-and-menu.css?v=db90e70c">
-<link rel="stylesheet" href="assets/css/mobile-experience.css?v=ed497c79">
+<link rel="stylesheet" href="assets/css/system.css?v=19f88beb">
+<link rel="stylesheet" href="assets/css/editorial.css?v=507259a4">
+<link rel="stylesheet" href="assets/css/type-and-menu.css?v=b4243ab7">
+<link rel="stylesheet" href="assets/css/mobile-experience.css?v=7d18c7a7">
 <link rel="stylesheet" href="assets/css/showcase.css?v=d8eb4386">
+<link rel="stylesheet" href="assets/css/interaction.css?v=b63ed551">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"K6 veitingar","legalName":"K6 ehf.","taxID":"620310-0850","url":"https://k6veitingar.is/",
 "address":{"@type":"PostalAddress","streetAddress":"Kaupvangsstræti 6","postalCode":"600","addressLocality":"Akureyri","addressCountry":"IS"},
@@ -36,7 +37,6 @@
 <header class="mast">
   <div class="folio">
     <span data-date>Akureyri</span>
-    <span class="folio__mid">Blað K6 veitinga · Bautinn, Rub 23 og Pizzasmiðjan</span>
     <span class="status" data-hours='{"0":[["12:00","22:00"]],"1":[["11:30","22:00"]],"2":[["11:30","22:00"]],"3":[["11:30","22:00"]],"4":[["11:30","22:00"]],"5":[["11:30","22:00"]],"6":[["12:00","22:00"]]}' data-label-open="Bautinn opinn núna" data-label-closed="Bautinn lokaður núna">Opnunartími</span>
   </div>
   <div class="mast__row">
@@ -116,10 +116,7 @@
       </article>
     </div>
   </section>
-<div class="ticker" data-speed=".42" aria-hidden="true">
-    <div class="ticker__track"><div class="ticker__item">Þrír staðir í hjarta Akureyrar ✦ Grillhús síðan 1971 ✦ Sjávarréttir og sushi síðan 2008 ✦ Eldbakaðar pizzur síðan 2019 ✦ Hafnarstræti 92 og Kaupvangsstræti 6 ✦ Veisluþjónusta frá tólf manns ✦</div></div>
-  </div>
-
+  <div class="brk" role="presentation"><i class="brk__r rule"></i><span class="brk__m" aria-hidden="true">✦</span><i class="brk__r rule"></i></div>
 <section class="sec booking" id="bokabord" aria-labelledby="booking-title"><div class="booking__intro"><p class="kicker">Veldu stað</p><h2 class="display h2" id="booking-title">Hvar viltu borða?</h2><p class="body">Hvort langar þig á Rub 23 eða Bautann? Pizzurnar frá Pizzasmiðjunni eru líka bornar fram á Bautanum.</p></div><div class="booking__options"><a class="booking__option" href="https://www.dineout.is/is/rub23?isolation=true" data-booking="rub23"><span><strong>Rub 23</strong><small>Fiskur, kjöt og sushi · bóka borð</small></span><span aria-hidden="true">↗</span></a><a class="booking__option" href="bautinn.html#bokabord"><span><strong>Bautinn og Pizzasmiðjan</strong><small>Grillréttir og eldbakaðar pizzur · borð og opnunartímar</small></span><span aria-hidden="true">↗</span></a><p class="booking__note">Veisla eða einkahóf? <a href="#veislur">Skoða veisluþjónustu</a></p></div></section>
   <!-- the people: one story, drop cap, a facts box -->
   <section class="sec" id="folkid">
@@ -174,17 +171,22 @@
 
   <footer class="foot">
     <div class="foot__box">
-      <div><p class="small">Kaupvangsstræti 6, 600 Akureyri<br>K6 ehf. · Kt. 620310-0850<br><a href="mailto:veisla@rub23.is">veisla@rub23.is</a></p></div>
+      <div class="foot__id">
+        <p class="small">Kaupvangsstræti 6, 600 Akureyri<br>K6 ehf. · Kt. 620310-0850</p>
+        <a class="foot__mail" href="mailto:veisla@rub23.is">veisla@rub23.is</a>
+      </div>
       <div><h3>Staðirnir</h3><ul><li><a href="bautinn.html">Bautinn · 462 1818</a></li><li><a href="rub23.html">Rub 23 · 462 2223</a></li><li><a href="pizzasmidjan.html">Pizzasmiðjan · 461 5858</a></li></ul></div>
       <div><h3>Þjónusta</h3><ul><li><a href="#bokabord">Finna borð</a></li><li><a href="#veislur">Veisluþjónusta</a></li><li><a href="#auglysingar">Gjafabréf</a></li><li><a href="#auglysingar">Atvinna</a></li></ul></div>
       <div><h3>Heimsókn</h3><ul><li>Hafnarstræti 92</li><li>Kaupvangsstræti 6</li><li><a href="https://www.facebook.com/rub23restaurant/" rel="noopener">Facebook</a></li></ul></div>
     </div>
+
+    <p class="foot__word" aria-hidden="true">K6 veitingar</p>
 
     <div class="foot__base"><p class="foot__note">Frumgerð, ekki opinber vefsíða. Efni, myndir og merki frá K6 veitingum.</p><a class="sndr" href="https://sndrstudio.is" target="_blank" rel="noopener" aria-label="Hannað af SNDR Studio" data-logotype><span class="sndr__mark">SN<i>✦</i>DR</span><span class="sndr__studio">STUDIO</span></a></div>
   </footer>
 </main>
 
 <nav class="dock" aria-label="Flýtileiðir"><a href="#stadirnir">Staðirnir</a><a href="#bokabord">Finna borð</a><a href="#veislur">Veislur</a></nav>
-<script src="assets/js/motion.js?v=bf272f6d" defer></script>
+<script src="assets/js/motion.js?v=8e75b182" defer></script>
 </body>
 </html>

@@ -14,11 +14,12 @@
 <link rel="icon" href="assets/img/icons/icon-bautinn-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="assets/img/icons/icon-bautinn-512.png" sizes="512x512" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/icons/icon-bautinn-180.png">
-<link rel="stylesheet" href="assets/css/system.css?v=a8c07ab9">
-<link rel="stylesheet" href="assets/css/editorial.css?v=dbba8318">
-<link rel="stylesheet" href="assets/css/type-and-menu.css?v=db90e70c">
-<link rel="stylesheet" href="assets/css/mobile-experience.css?v=ed497c79">
+<link rel="stylesheet" href="assets/css/system.css?v=19f88beb">
+<link rel="stylesheet" href="assets/css/editorial.css?v=507259a4">
+<link rel="stylesheet" href="assets/css/type-and-menu.css?v=b4243ab7">
+<link rel="stylesheet" href="assets/css/mobile-experience.css?v=7d18c7a7">
 <link rel="stylesheet" href="assets/css/showcase.css?v=d8eb4386">
+<link rel="stylesheet" href="assets/css/interaction.css?v=b63ed551">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Restaurant","name":"Bautinn","url":"https://bautinn.is/","telephone":"+354-462-1818","email":"bautinn@bautinn.is","foundingDate":"1971-04-06","parentOrganization":{"@type":"Organization","name":"K6 veitingar"},
 "address":{"@type":"PostalAddress","streetAddress":"Hafnarstræti 92","postalCode":"600","addressLocality":"Akureyri","addressCountry":"IS"},
@@ -32,7 +33,6 @@
 <header class="mast">
   <div class="folio">
     <span data-date>Akureyri</span>
-    <span class="folio__mid">Hafnarstræti 92 · Akureyri · hluti af K6 veitingum</span>
     <span class="status" data-hours='{"0":[["12:00","22:00"]],"1":[["11:30","22:00"]],"2":[["11:30","22:00"]],"3":[["11:30","22:00"]],"4":[["11:30","22:00"]],"5":[["11:30","22:00"]],"6":[["12:00","22:00"]]}'>Opnunartími</span>
   </div>
   <div class="mast__row">
@@ -70,9 +70,7 @@
   </section>
 
   <!-- the house: story plus the annáll -->
-  <div class="ticker" data-speed=".42" aria-hidden="true">
-    <div class="ticker__track"><div class="ticker__item">Elsta grillhúsið á landsbyggðinni ✦ Opnaði 6. apríl 1971 ✦ Í húsi frá 1902 ✦ Hafnarstræti 92 ✦ Góður matur á sanngjörnu verði ✦ Eldbakaðar pizzur allan daginn ✦</div></div>
-  </div>
+  <div class="brk" role="presentation"><i class="brk__r rule"></i><span class="brk__m" aria-hidden="true">✦</span><i class="brk__r rule"></i></div>
 <section class="sec" id="husid">
     <div class="cols cols--7-5 colrule">
       <div class="story" data-reveal-group>
@@ -168,19 +166,24 @@
   <section class="sec sec--tight" aria-label="Fleira hjá K6 veitingum">
     <p class="kicker">Fleira hjá K6 veitingum</p>
     <div class="sibs" data-in>
-          <a class="sib" href="rub23.html" style="--sib-accent:#B0141A"><span class="sib__fig"><img src="assets/img/w/rub-03-800.webp" srcset="assets/img/w/rub-03-800.webp 800w" sizes="(min-width:48em) 26vw, 38vw" alt="Sushi borið fram á Rub 23" width="800" height="534" loading="lazy" decoding="async"></span><span class="sib__txt"><span class="sib__n">Rub 23</span><span class="sib__t">Sjávarréttir og sushi, Kaupvangsstræti 6</span></span><span class="sib__go" aria-hidden="true"></span></a>
-          <a class="sib" href="pizzasmidjan.html" style="--sib-accent:#9C0B1A"><span class="sib__fig"><img src="assets/img/w/pz-05-800.webp" srcset="assets/img/w/pz-05-800.webp 800w, assets/img/w/pz-05-1400.webp 1400w" sizes="(min-width:48em) 26vw, 38vw" alt="Pizzabakari kastar deigi upp í loft" width="800" height="534" loading="lazy" decoding="async"></span><span class="sib__txt"><span class="sib__n">Pizzasmiðjan</span><span class="sib__t">Eldbakaðar pizzur í sama húsi</span></span><span class="sib__go" aria-hidden="true"></span></a>
-          <a class="sib" href="index.html" style="--sib-accent:#B3121A"><span class="sib__fig"><img src="assets/img/w/k6-03-800.webp" srcset="assets/img/w/k6-03-800.webp 800w, assets/img/w/k6-03-1400.webp 1400w" sizes="(min-width:48em) 26vw, 38vw" alt="Veisluborð lögð fyrir hóp, á vegum K6 veitinga" width="800" height="533" loading="lazy" decoding="async"></span><span class="sib__txt"><span class="sib__n">K6 veitingar</span><span class="sib__t">Veisluþjónusta og gjafabréf</span></span><span class="sib__go" aria-hidden="true"></span></a>
+          <a class="sib" href="rub23.html" style="--sib-accent:#B0141A"><span class="sib__fig"><img src="assets/img/w/rub-03-800.webp" srcset="assets/img/w/rub-03-400.webp 400w, assets/img/w/rub-03-800.webp 800w" sizes="(min-width:48em) 26vw, 38vw" alt="Sushi borið fram á Rub 23" width="800" height="534" loading="lazy" decoding="async"></span><span class="sib__txt"><span class="sib__n">Rub 23</span><span class="sib__t">Sjávarréttir og sushi, Kaupvangsstræti 6</span></span><span class="sib__go" aria-hidden="true"></span></a>
+          <a class="sib" href="pizzasmidjan.html" style="--sib-accent:#9C0B1A"><span class="sib__fig"><img src="assets/img/w/pz-05-800.webp" srcset="assets/img/w/pz-05-400.webp 400w, assets/img/w/pz-05-800.webp 800w, assets/img/w/pz-05-1400.webp 1400w" sizes="(min-width:48em) 26vw, 38vw" alt="Pizzabakari kastar deigi upp í loft" width="800" height="534" loading="lazy" decoding="async"></span><span class="sib__txt"><span class="sib__n">Pizzasmiðjan</span><span class="sib__t">Eldbakaðar pizzur í sama húsi</span></span><span class="sib__go" aria-hidden="true"></span></a>
+          <a class="sib" href="index.html" style="--sib-accent:#B3121A"><span class="sib__fig"><img src="assets/img/w/k6-03-800.webp" srcset="assets/img/w/k6-03-400.webp 400w, assets/img/w/k6-03-800.webp 800w, assets/img/w/k6-03-1400.webp 1400w" sizes="(min-width:48em) 26vw, 38vw" alt="Veisluborð lögð fyrir hóp, á vegum K6 veitinga" width="800" height="533" loading="lazy" decoding="async"></span><span class="sib__txt"><span class="sib__n">K6 veitingar</span><span class="sib__t">Veisluþjónusta og gjafabréf</span></span><span class="sib__go" aria-hidden="true"></span></a>
         </div>
   </section>
 
   <footer class="foot">
     <div class="foot__box">
-      <div><p class="small">Hafnarstræti 92, 600 Akureyri<br><a href="tel:+3544621818">462 1818</a><br><a href="mailto:bautinn@bautinn.is">bautinn@bautinn.is</a></p></div>
+      <div class="foot__id">
+        <p class="small">Hafnarstræti 92, 600 Akureyri<br><a href="tel:+3544621818">462 1818</a></p>
+        <a class="foot__mail" href="mailto:bautinn@bautinn.is">bautinn@bautinn.is</a>
+      </div>
       <div><h3>Opið</h3><ul><li>Virka daga kl. 11:30–22:00</li><li>Um helgar kl. 12:00–22:00</li></ul></div>
       <div><h3>Meira</h3><ul><li><a href="#bokabord">Borð og opnunartímar</a></li><li><a href="#veislur">Veislur</a></li><li><a href="https://k6veitingar.is/is/gjafabref" rel="noopener">Gjafabréf</a></li><li><a href="index.html">K6 veitingar</a></li></ul></div>
       <div><h3>Staðirnir</h3><ul><li><a href="rub23.html">Rub 23</a></li><li><a href="pizzasmidjan.html">Pizzasmiðjan</a></li><li><a href="https://www.facebook.com/Bautinn-179320098766418/" rel="noopener">Facebook</a></li></ul></div>
     </div>
+
+    <p class="foot__word" aria-hidden="true">Bautinn</p>
 
     <div class="foot__base"><p class="foot__note">Frumgerð, ekki opinber vefsíða. Efni og myndir frá Bautanum.</p><a class="sndr" href="https://sndrstudio.is" target="_blank" rel="noopener" aria-label="Hannað af SNDR Studio" data-logotype><span class="sndr__mark">SN<i>✦</i>DR</span><span class="sndr__studio">STUDIO</span></a></div>
   </footer>
@@ -188,6 +191,6 @@
 
 
 <nav class="dock" aria-label="Flýtileiðir"><a href="#matsedill">Matseðill</a><a href="#bokabord">Finna borð</a><a href="#heimsokn">Heimsókn</a></nav>
-<script src="assets/js/motion.js?v=bf272f6d" defer></script>
+<script src="assets/js/motion.js?v=8e75b182" defer></script>
 </body>
 </html>

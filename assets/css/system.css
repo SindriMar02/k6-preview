@@ -97,7 +97,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .mast{position:relative;z-index:60;background:var(--paper);padding-inline:calc(var(--rail) + .75rem)}
 .folio{display:flex;align-items:center;justify-content:space-between;gap:1rem;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;font-weight:500;color:var(--ink-66);padding:.55rem 0;border-bottom:1px solid var(--red)}
 .folio>*{min-height:28px;display:inline-flex;align-items:center;gap:.5rem}
-.folio__mid{display:none}@media(min-width:48em){.folio__mid{display:inline-flex}}
 .mast__row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;padding:.9rem 0 .8rem}
 @media(max-width:47.99em){
   .mast__row{grid-template-columns:1fr auto;padding:.7rem 0}
@@ -159,12 +158,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .menu__meta{display:grid;gap:.15rem;padding-top:1rem;border-top:1px solid var(--red);color:var(--ink-66);font-size:.9375rem;font-style:italic}
 .menu__meta a{display:inline-flex;align-items:center;min-height:44px}
 
-/* ---------- 7. the masthead: a STATIC fitted wordmark, then a moving ticker ----------
+/* ---------- 7. the masthead: a STATIC fitted wordmark ----------
    A scrolling band can only ever show a whole name if one unit is under half the
    viewport; above that there is always an instant with no complete name on screen.
    A masthead is the one element that must read, so it holds still and is fitted to
-   the measure, and the motion moves to the ticker strip beneath it, which is what a
-   broadsheet actually does. */
+   the measure. The scrolling announcement strip that used to sit beneath it is gone:
+   it read as a banner ad, it could never be caught up with, and the chapter division
+   it was really doing is now done by `.brk` (see interaction.css). */
 .masthead{position:relative;padding-block:clamp(.5rem,1.4vw,1.2rem) clamp(.2rem,.6vw,.5rem)}
 .wordmark{margin:0;padding-right:var(--word-reserve,0);font-family:var(--serif);font-weight:800;text-transform:uppercase;
   font-size:var(--word-fs,clamp(2.6rem,13vw,12rem));line-height:.9;letter-spacing:-.03em;
@@ -181,11 +181,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   .film__word{font-size:clamp(2.2rem,10.5vw,3.6rem)}
 }
 
-.ticker{overflow:hidden;border-top:2px solid var(--red);border-bottom:1px solid var(--red);padding-block:.5rem;--vskew:0deg}
-.ticker__track{display:flex;width:max-content;will-change:transform;transform:translate3d(var(--mx,0),0,0) skewX(var(--vskew));transition:transform .12s linear}
-@media(prefers-reduced-motion:reduce){.ticker__track{transform:none;transition:none}}
-.ticker__item{padding-right:1.5rem;white-space:nowrap;font-family:var(--serif);font-style:italic;font-weight:600;
-  font-size:clamp(.9375rem,1.15vw,1.125rem);letter-spacing:.01em;color:var(--red-ink)}
 
 /* ---------- 8. the lead: photograph inside the rules ---------- */
 .page{padding-inline:calc(var(--rail) + .75rem)}

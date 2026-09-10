@@ -1,0 +1,353 @@
+/* ============================================================
+   K6 VEITINGAR — INTERACTION + COLOPHON
+   Loads LAST, after type-and-menu.css, which had flattened the whole
+   hover system to `transform:none;box-shadow:none` and left every
+   clickable thing on the page reacting either not at all or with a
+   flat colour swap. This file owns three things:
+
+     1. `.brk`   the chapter division that replaced the announcement
+                 ticker. A moving band can never be caught up with and
+                 read as a banner ad; the job it was actually doing was
+                 dividing chapters, so it is done by a printed device.
+     2. hover    ONE law for everything clickable: a rule, a fill or a
+                 photograph moves toward the thing you are about to get.
+                 One easing (--ease), one duration ladder (--t2..--t4).
+                 Nothing that is not clickable moves.
+     3. `.foot`  the colophon. It was a red-ruled box with four link
+                 columns and a large empty cell, which reads as a
+                 wireframe rather than the end of a paper.
+
+   Two hard rules, both load-bearing:
+   - Every hover sits inside `@media(hover:hover) and (pointer:fine)`.
+     A phone that fires :hover on tap sticks in the hovered state until
+     the next tap lands somewhere else.
+   - Every hover has a `:focus-visible` twin. A keyboard must be shown
+     the same thing a cursor is shown.
+   ============================================================ */
+
+/* ---------- 1. the chapter break ---------- */
+/* Rules grow OUTWARD from the mark, so the eye is handed the centre
+   first and the break reads as a division rather than as a border.
+   `.brk__r` is a `.rule`, so it inherits the reveal state machine and
+   the no-JS fallback in editorial.css for free. */
+.brk{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  gap:clamp(.9rem,2.4vw,1.9rem);margin-block:clamp(2.75rem,6.5vw,5.5rem);
+  padding-inline:clamp(0rem,2vw,2.5rem)}
+.brk .brk__r{display:block;height:1px;background:var(--red);opacity:.45;
+  transition:transform var(--t6) var(--ease)}
+.brk .brk__r:first-child{transform-origin:right}
+.brk .brk__r:last-child{transform-origin:left}
+/* --red-ink, not --red: K6's brighter #ED1C24 at .85 measures 3.99:1 on paper. */
+.brk__m{font-family:var(--serif);font-size:clamp(.9375rem,1.3vw,1.1875rem);line-height:1;
+  color:var(--red-ink);opacity:.9;user-select:none}
+/* The break IS the division, so the section it introduces must not draw a second
+   one 100px below it. `.booking` carries its own top hairline for the case where
+   nothing precedes it. */
+.brk+.sec,.brk+section{border-top:0}
+@media(max-width:47.99em){.brk{margin-block:clamp(2rem,9vw,3rem)}}
+@media(prefers-reduced-motion:reduce){.brk .brk__r{transition:none}}
+
+/* ---------- 2. the shared hover law ---------- */
+
+/* 2a. the framed button: ink wipes across from the side the cursor came
+   from (--ox is set on mouseenter in motion.js). type-and-menu.css had
+   dropped the inset frame, which left the old inset:4px fill floating
+   inside a paper margin; the fill now takes the whole plate. */
+.btn{position:relative;overflow:hidden;isolation:isolate;
+  transition:color var(--t3) var(--ease),border-color var(--t3) var(--ease),transform var(--t2) var(--ease)}
+.btn::before{inset:0;transform-origin:var(--ox,left);transition:transform var(--t4) var(--ease-wipe)}
+.btn:active{transform:translateY(1px)}
+@media(hover:hover) and (pointer:fine){
+  .btn:hover{border-color:var(--red-ink)}
+}
+
+/* 2b. the stamp button (Finna borð): the deeper red rises from the
+   baseline, the plate lifts a hair. No rotation — it lives in a fixed
+   bar and a rotating target is harder to hit. */
+.stampbtn{position:relative;overflow:hidden;isolation:isolate;
+  transition:transform var(--t3) var(--ease),color var(--t3) var(--ease)}
+.stampbtn::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--red-deep);
+  transform:scaleY(0);transform-origin:bottom;transition:transform var(--t4) var(--ease-wipe)}
+.stampbtn:active{transform:translateY(0) scale(.985)}
+.stampbtn:focus-visible::after{transform:scaleY(1)}
+@media(hover:hover) and (pointer:fine){
+  .stampbtn:hover{transform:translateY(-1px)}
+  .stampbtn:hover::after{transform:scaleY(1)}
+}
+
+/* 2c. the burger: the three rules of the glyph close toward the middle,
+   which is what the button is about to do to the page. */
+.roundbtn{transition:background var(--t3) var(--ease),border-color var(--t3) var(--ease)}
+.roundbtn::before{transition:background-size var(--t4) var(--ease)}
+@media(hover:hover) and (pointer:fine){
+  .roundbtn:hover::before,.roundbtn:focus-visible::before{background-size:56% 1px}
+}
+.roundbtn:focus-visible::before{background-size:56% 1px}
+
+/* 2d. the masthead lockup */
+.mast__logo{transition:background var(--t3) var(--ease),border-color var(--t3) var(--ease)}
+@media(hover:hover) and (pointer:fine){
+  .mast__logo:hover{background:var(--red-wash);border-color:var(--red-ink)}
+}
+
+/* 2e. the standing text link: one underline wipes OUT to the right and a
+   fresh one wipes IN from the left, so the rule reads as travel rather
+   than as a highlight. The arrow leads it. */
+.link span{background-size:100% 1px;background-position:0 100%;
+  transition:background-size var(--t3) var(--ease-wipe)}
+.link::after{transition:transform var(--t3) var(--ease)}
+@media(hover:hover) and (pointer:fine){
+  .link:hover span{background-position:100% 100%;background-size:0 1px}
+  .link:hover::after{transform:translateX(.4rem)}
+}
+.link:focus-visible::after{transform:translateX(.4rem)}
+
+/* 2f. links set inside running text — footer lists, notes, addresses.
+   A 1px rule under the word grows from the left. */
+.foot li a,.foot .small a,.booking__note a,.foot__mail{
+  position:relative;background-image:none;text-decoration:none;
+  transition:color var(--t3) var(--ease)}
+.foot li a::after,.foot .small a::after,.booking__note a::after,.foot__mail::after{
+  content:"";position:absolute;left:0;right:0;bottom:.55rem;height:1px;background:currentColor;
+  opacity:.34;transform:scaleX(var(--u,1));transform-origin:left;
+  transition:transform var(--t4) var(--ease),opacity var(--t3) var(--ease)}
+.foot li a,.foot .small a,.foot__mail{--u:0}
+.booking__note a{text-decoration:none}
+@media(hover:hover) and (pointer:fine){
+  .foot li a:hover,.foot .small a:hover,.booking__note a:hover,.foot__mail:hover{color:var(--red-ink)}
+  .foot li a:hover::after,.foot .small a:hover::after,.foot__mail:hover::after{--u:1;opacity:1}
+  .booking__note a:hover::after{opacity:1}
+}
+.foot li a:focus-visible::after,.foot .small a:focus-visible::after,.foot__mail:focus-visible::after{--u:1;opacity:1}
+/* A phone never gets the hover, so on a coarse pointer the rule stays printed:
+   without it these read as plain text and nothing says they are links. */
+@media(hover:none){
+  .foot li a::after,.foot .small a::after,.foot__mail::after{--u:1;opacity:.3}
+}
+
+/* 2g. the booking rows: the hairline under the row goes to full brand red
+   and the ↗ leaves the row in the direction it is about to send you. */
+.booking__option{position:relative;transition:color var(--t3) var(--ease)}
+.booking__option::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+  background:var(--red);transform:scaleX(0);transform-origin:left;
+  transition:transform var(--t4) var(--ease)}
+.booking__option strong{transition:color var(--t3) var(--ease)}
+.booking__option>span:last-child{display:inline-block;
+  transition:transform var(--t3) var(--ease),color var(--t3) var(--ease)}
+@media(hover:hover) and (pointer:fine){
+  .booking__option:hover::after{transform:scaleX(1)}
+  .booking__option:hover strong{color:var(--red-deep)}
+  .booking__option:hover>span:last-child{transform:translate3d(.35rem,-.35rem,0);color:var(--red)}
+}
+.booking__option:focus-visible::after{transform:scaleX(1)}
+.booking__option:focus-visible>span:last-child{transform:translate3d(.35rem,-.35rem,0)}
+
+/* 2h. the venue cards on the index: the whole card is the target, so the
+   whole card answers — not only the photograph the cursor happens to be
+   over. The visit rule extends toward the page it opens. */
+.venue__brand img{transition:transform var(--t4) var(--ease)}
+.venue__description,.venue__meta{transition:color var(--t3) var(--ease)}
+@media(hover:hover) and (pointer:fine){
+  .venue:hover .venue__photo img{transform:scale(1.05)}
+  .venue:hover .venue__brand img{transform:translateX(3px)}
+  .venue:hover .venue__visit::after{transform:scaleX(1)}
+  .venue:hover .venue__tagline{color:var(--red-ink)}
+}
+
+/* 2i. the classified ads and the pizza cards: a red rule prints across
+   the top of the card, the name takes the brand ink. */
+.ad{transition:background var(--t3) var(--ease)}
+.ad::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--red);
+  transform:scaleX(0);transform-origin:left;transition:transform var(--t4) var(--ease);pointer-events:none}
+.ad__n{transition:color var(--t3) var(--ease)}
+@media(hover:hover) and (pointer:fine){
+  .ad:hover::before{transform:scaleX(1)}
+  .ad:hover .ad__n{color:var(--red-ink)}
+}
+.ad--red::before,.ad--big::before{background:var(--paper)}
+.ad:focus-within::before{transform:scaleX(1)}
+
+/* 2j. the full-screen menu list */
+.menu__list a::after{transition:transform var(--t3) var(--ease),color var(--t3) var(--ease)}
+@media(hover:hover) and (pointer:fine){
+  .menu__list a:hover::after{transform:translateX(.5rem);color:var(--red)}
+}
+
+/* 2l. the film controls, and the menu category tabs */
+.film__ctrl{transition:background var(--t3) var(--ease),color var(--t3) var(--ease),border-color var(--t3) var(--ease)}
+.menu-categories button{transition:background var(--t3) var(--ease),color var(--t3) var(--ease)}
+@media(hover:hover) and (pointer:fine){
+  .menu-categories button:not([aria-pressed=true]):hover{background:var(--red-wash)}
+}
+
+/* 2m. touch targets that will never see a cursor still need to acknowledge
+   the tap — the bottom dock and the arrival nav on a phone. */
+.dock a,.arrival-nav a{transition:background var(--t2) var(--ease),color var(--t2) var(--ease)}
+.dock a:active,.arrival-nav a:active{background:var(--red-wash)}
+.dock a:last-child:active{background:var(--red-deep)}
+
+@media(prefers-reduced-motion:reduce){
+  .btn,.btn::before,.stampbtn,.stampbtn::after,.roundbtn::before,.mast__logo,.link span,.link::after,
+  .booking__option,.booking__option::after,.booking__option>span:last-child,.venue__brand img,
+  .ad,.ad::before,.ad__n,.menu__list a::after,.film__ctrl,.dock a,.arrival-nav a,
+  .foot li a::after,.foot .small a::after,.booking__note a::after,.foot__mail::after{transition:none}
+}
+
+/* ---------- 3. the colophon ---------- */
+/* Was: a 2px red box with an inset second rule around four columns, the
+   first of which held three lines of address and half a screen of air.
+   Now: a masthead rule, four ruled columns that each carry weight, the
+   brand set as a printing plate across the foot, and the imprint line. */
+.foot{padding-block:clamp(3rem,6.5vw,5.5rem) 0}
+.foot__box{border:0;box-shadow:none;background:transparent;padding:0;
+  border-top:2px solid var(--red);padding-top:clamp(1.6rem,3vw,2.6rem);
+  display:grid;gap:clamp(1.75rem,3vw,2.5rem);grid-template-columns:1fr}
+@media(min-width:48em){
+  .foot__box{grid-template-columns:1.45fr 1fr 1fr 1fr;gap:0}
+  .foot__box>*+*{border-left:1px solid var(--hair);padding-left:clamp(1.25rem,2.6vw,2.5rem)}
+  .foot__box>*{padding-right:clamp(.75rem,1.6vw,1.5rem)}
+}
+@media(max-width:47.99em){
+  .foot__box{grid-template-columns:1fr 1fr;gap:1.75rem 1.5rem}
+  .foot__box>div:first-child{grid-column:1/-1}
+}
+@media(max-width:23.99em){.foot__box{grid-template-columns:1fr}}
+
+/* No brand lockup here: the outlined plate across the foot IS the mark, and a
+   second one 200px above it was the same name printed twice. */
+.foot__id{display:grid;gap:.9rem;align-content:start}
+.foot__id .small{margin:0;color:var(--ink-66);line-height:1.7}
+.foot__mail{display:inline-flex;align-items:center;min-height:44px;justify-self:start;
+  font-family:var(--serif);font-weight:600;font-size:1rem;color:var(--red-ink)}
+
+.foot h3{font-family:var(--text);font-style:normal;font-weight:600;font-size:.6875rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-66);
+  margin:0 0 .85rem;display:flex;align-items:center;gap:.65rem}
+.foot h3::after{content:"";flex:1;height:1px;background:var(--hair)}
+.foot ul{display:grid;gap:0}
+.foot li{min-height:0;display:block;color:var(--ink-66)}
+.foot li a{display:inline-flex;align-items:center;min-height:40px;color:var(--ink)}
+.foot li:not(:has(a)){display:flex;align-items:center;min-height:40px;line-height:1.5}
+
+/* the plate: the brand cut across the foot of the page in outline, the way
+   a press mark sits under the last column. Decoration, so aria-hidden, and
+   fitted to the full measure by motion.js rather than capped to the
+   masthead cap height — every page's plate spans the same width, which is
+   what makes the four footers read as one family. */
+.foot__word{overflow:hidden;line-height:.92;margin:clamp(2rem,5vw,3.75rem) 0 clamp(.6rem,1.4vw,1.1rem);text-align:center;
+  font-family:var(--serif);font-weight:800;text-transform:uppercase;
+  font-size:var(--foot-fs,clamp(3rem,17vw,14rem));letter-spacing:-.045em;
+  color:transparent;-webkit-text-stroke:1.25px var(--red);
+  white-space:nowrap;user-select:none;opacity:.42;pointer-events:none}
+@media(max-width:47.99em){.foot__word{-webkit-text-stroke-width:1px;opacity:.5;margin-top:2rem}}
+
+.foot__base{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:.75rem 1.5rem;border-top:1px solid var(--red);margin-top:clamp(1rem,2.2vw,1.75rem);
+  padding:1rem 0 calc(1.25rem + env(safe-area-inset-bottom));font-style:normal}
+.foot__note{max-width:64ch;margin:0;color:var(--ink-66)}
+/* Must sit AFTER the base rule above: same specificity, so source order decides. */
+@media(max-width:47.99em){.foot__base{flex-direction:column;align-items:flex-start;gap:.9rem}}
+
+/* the studio signature: the star is the only mark that moves. */
+.sndr{transition:color var(--t3) var(--ease)}
+.sndr__mark i{display:inline-block;transition:transform var(--t5) var(--ease-stamp),color var(--t3) var(--ease)}
+@media(hover:hover) and (pointer:fine){
+  .sndr:hover{color:var(--ink)}
+  .sndr:hover .sndr__mark i{transform:rotate(90deg) scale(1.15)}
+}
+.sndr:focus-visible .sndr__mark i{transform:rotate(90deg) scale(1.15)}
+@media(prefers-reduced-motion:reduce){.sndr,.sndr__mark i{transition:none}}
+
+/* ---------- 4. the classifieds (#auglysingar, index only) ----------
+   Was a 2x2 grid of hairline-boxed cards with a boxed button in each: the
+   generic card pattern, and the one block on the page that belonged to no
+   grammar. A newspaper does not box its classifieds — it sets them in narrow
+   ruled columns under a small-caps category head, and buys a boxed display ad
+   only when it wants one item to shout. So: four columns between two rules,
+   vertical hairlines instead of boxes, the button demoted to a text link with
+   a travelling arrow, and the one item that IS a pitch (Atvinna) inverted.
+
+   Scoped to #auglysingar on purpose. `.ad` is also the pizza card on
+   pizzasmidjan.html — thirteen of them — and that grid is a menu, not a
+   classified page. */
+#auglysingar .ads{display:grid;gap:0;grid-template-columns:1fr;border-inline:0;
+  border-top:2px solid var(--red);border-bottom:1px solid var(--red)}
+@media(min-width:36em){#auglysingar .ads{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:62em){#auglysingar .ads{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+#auglysingar .ad{position:relative;background:transparent;border:0;border-radius:0;
+  padding:clamp(1.35rem,2.3vw,2.1rem) clamp(1rem,1.7vw,1.6rem) clamp(1.5rem,2.5vw,2.25rem);
+  display:grid;gap:.65rem;align-content:start;grid-row:auto;
+  transition:background var(--t3) var(--ease)}
+/* one hairline between columns, never a box: the rule belongs to the gutter,
+   so it is drawn by the neighbour that has one on its left. */
+#auglysingar .ad+.ad{border-top:1px solid var(--hair)}
+@media(min-width:36em){
+  #auglysingar .ad+.ad{border-top:0}
+  #auglysingar .ad:nth-child(2n){border-left:1px solid var(--hair)}
+  #auglysingar .ad:nth-child(n+3){border-top:1px solid var(--hair)}
+}
+@media(min-width:62em){
+  #auglysingar .ad:nth-child(n+2){border-left:1px solid var(--hair);border-top:0}
+}
+
+#auglysingar .ad__no{font-family:var(--text);font-style:normal;font-weight:600;
+  font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-66);
+  margin:0 0 .35rem}
+#auglysingar .ad__n{font-family:var(--serif);font-weight:600;font-size:clamp(1.35rem,1.9vw,1.7rem);
+  letter-spacing:-.03em;line-height:1.15;color:var(--red-ink);margin:0;
+  transition:color var(--t3) var(--ease)}
+#auglysingar .ad p{font-size:.9375rem;line-height:1.65;color:var(--ink-66);margin:0;max-width:34ch}
+
+/* the button becomes what it is in a classified: a line of type that leads
+   somewhere. Its rule grows under it, its arrow leaves. */
+#auglysingar .ad .btn{border:0;background:none;box-shadow:none;padding:0;overflow:visible;
+  min-height:44px;justify-content:flex-start;gap:.45rem;justify-self:start;margin-top:.35rem;
+  font-family:var(--serif);font-style:normal;font-weight:600;font-size:.9375rem;
+  letter-spacing:0;text-transform:none;color:var(--red-ink);position:relative}
+#auglysingar .ad .btn::before{content:"";position:absolute;left:0;right:1.1rem;bottom:.6rem;
+  top:auto;inset-inline-start:0;height:1px;background:currentColor;z-index:0;
+  transform:scaleX(0);transform-origin:left;transition:transform var(--t4) var(--ease)}
+#auglysingar .ad .btn::after{content:"→";transition:transform var(--t3) var(--ease)}
+
+/* the display ad: the one item that is a pitch rather than a listing */
+#auglysingar .ad--red{background:var(--red-deep);color:var(--paper);border-left-color:var(--red-deep)}
+#auglysingar .ad--red .ad__no{color:var(--bone-70)}
+#auglysingar .ad--red .ad__n,#auglysingar .ad--red .btn{color:var(--paper)}
+#auglysingar .ad--red p{color:var(--bone-70)}
+
+@media(hover:hover) and (pointer:fine){
+  #auglysingar .ad:hover{background:var(--red-wash)}
+  #auglysingar .ad--red:hover{background:var(--red-deep)}
+  #auglysingar .ad:hover .ad__n{color:var(--red-deep)}
+  #auglysingar .ad--red:hover .ad__n{color:var(--paper)}
+  #auglysingar .ad .btn:hover::before{transform:scaleX(1)}
+  #auglysingar .ad .btn:hover::after{transform:translateX(.3rem)}
+}
+#auglysingar .ad .btn:focus-visible::before{transform:scaleX(1)}
+#auglysingar .ad .btn:focus-visible::after{transform:translateX(.3rem)}
+@media(prefers-reduced-motion:reduce){
+  #auglysingar .ad,#auglysingar .ad__n,#auglysingar .ad .btn::before,#auglysingar .ad .btn::after{transition:none}
+}
+
+/* ---------- 5. the Pizzasmiðjan diptych ----------
+   Two of their own photographs at one size: the hands that throw the dough and
+   the fire that bakes it, which is the whole proposition in two frames. Both
+   are anchored on the same dark warm ground, so the pair reads as one spread
+   rather than as two pictures that happen to be adjacent. The caption sits
+   under a rule beneath them, so the hero itself is the photography. */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.4rem,.9vw,.9rem);
+  margin-block:0 clamp(1.75rem,3.5vw,3rem)}
+.duo__f{margin:0;overflow:hidden;background:var(--paper-2);aspect-ratio:3/2;min-width:0}
+.duo__f img{width:100%;height:100%;object-fit:cover;display:block}
+.duo__cap{grid-column:1/-1;display:grid;gap:.7rem;justify-items:start;max-width:54rem;
+  margin-top:clamp(.9rem,1.8vw,1.5rem);padding-top:clamp(1rem,2vw,1.6rem);
+  border-top:1px solid var(--red)}
+.duo__cap .kicker{margin:0}
+.duo__cap h2{margin:0;font-family:var(--serif);font-weight:600;letter-spacing:-.03em;
+  line-height:1.12;font-size:clamp(1.7rem,3.4vw,2.85rem);color:var(--red-ink);text-wrap:balance}
+.duo__cap>p:not(.kicker){margin:0;font-size:clamp(1rem,1.2vw,1.125rem);line-height:1.62;
+  color:var(--ink-66);max-width:48ch}
+.duo__cap .btn{margin-top:.4rem}
+/* Below 34em each half would be 170px wide, which is not a photograph any more. */
+@media(max-width:33.99em){.duo{grid-template-columns:1fr;gap:.5rem}.duo__f{aspect-ratio:4/3}}

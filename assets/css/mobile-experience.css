@@ -91,8 +91,6 @@
   .pick__body{padding:20px;gap:8px;grid-template-rows:auto}
   .pick__meta{margin-top:8px}
   .pick__actions{gap:0 18px}
-  .ticker{margin-top:28px;padding-block:8px}
-  .ticker__item{font-size:14px}
   .panel{padding:28px 24px}
   .panel--photo{padding:0}
   .panel--photo>.panel__in{padding:28px 24px}
@@ -132,10 +130,6 @@ html{scroll-padding-bottom:calc(76px + env(safe-area-inset-bottom))}
   .cfg__out{padding:24px;gap:18px}
 }
 .mast__nav a,.bar__mid a{min-width:44px;justify-content:center}
-.ticker{position:relative;min-height:46px;display:flex;align-items:center;padding-right:48px}
-.ticker__toggle{position:absolute;right:0;top:0;bottom:0;width:44px;min-height:44px;z-index:1;background:var(--paper);color:var(--red-ink);border-left:1px solid var(--hair-2);font:500 16px/1 var(--serif)}
-.ticker__toggle[hidden]{display:none}
-.ticker__toggle:focus-visible{outline-offset:-4px}
 /* Let the footage supply its camera movement without another page-driven crop. */
 .film .hero-media{transform:none}
 
