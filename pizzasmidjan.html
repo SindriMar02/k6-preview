@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="assets/css/type-and-menu.css?v=b4243ab7">
 <link rel="stylesheet" href="assets/css/mobile-experience.css?v=7d18c7a7">
 <link rel="stylesheet" href="assets/css/showcase.css?v=d8eb4386">
-<link rel="stylesheet" href="assets/css/interaction.css?v=b63ed551">
+<link rel="stylesheet" href="assets/css/interaction.css?v=9f1a94e6">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Restaurant","name":"Pizzasmiðjan","url":"https://pizzasmidjan.is/","telephone":"+354-461-5858","email":"pizzasmidjan@pizzasmidjan.is","foundingDate":"2019-02-12","servesCuisine":"Pizza","parentOrganization":{"@type":"Organization","name":"K6 veitingar"},
 "address":{"@type":"PostalAddress","streetAddress":"Hafnarstræti 92","postalCode":"600","addressLocality":"Akureyri","addressCountry":"IS"},
@@ -64,34 +64,20 @@
 <nav class="arrival-nav" aria-label="Flýtileiðir á síðunni"><a href="#matsedill">Matseðill</a><a href="#bokabord">Borð</a><a href="#hvar">Heimsókn</a></nav>
 
 
-  <!-- the diptych: the hands and the fire, their own photographs, one size each -->
-  <section class="duo" aria-label="Pizzasmiðjan">
-    <figure class="duo__f"><img sizes="(min-width:34em) 50vw, 100vw" alt="Pizzabakari kastar deigi upp í loft við rauðan vegg í Hafnarstræti 92" fetchpriority="high" decoding="async" src="assets/img/w/pz-05-1400.webp" srcset="assets/img/w/pz-05-800.webp 800w, assets/img/w/pz-05-1400.webp 1400w" width="1400" height="934"></figure>
-    <figure class="duo__f"><img sizes="(min-width:34em) 50vw, 100vw" alt="Pizza bakast í eldofni Pizzasmiðjunnar, logar í ofnmunnanum" fetchpriority="high" decoding="async" src="assets/img/w/pz-09-1400.webp" srcset="assets/img/w/pz-09-800.webp 800w, assets/img/w/pz-09-1400.webp 1400w" width="1400" height="933"></figure>
-    <div class="duo__cap">
-      <p class="kicker">Hafnarstræti 92</p>
-      <h2>Deigið er hnoðað og kastað á staðnum.</h2>
-      <p>Þrettán pizzur úr eldofni, bornar fram á Bautanum allan daginn.</p>
-      <a class="btn" href="#matsedill">Skoða matseðil</a>
-    </div>
-  </section>
-
-  <!-- the photo strip: three frames, one caption each -->
-  <section class="sec sec--tight" aria-label="Úr eldhúsinu">
-    <div class="strip" data-reveal-group>
-      <figure class="reveal" data-in><div class="frame frame--4-3 frame--ruled"><div class="frame__clip"><img src="assets/img/w/pz-06-800.webp" srcset="assets/img/w/pz-06-800.webp 800w, assets/img/w/pz-06-1400.webp 1400w" sizes="(min-width:48em) 44vw, 100vw" alt="Hendur fletja út deig í hveiti á steinborði" loading="lazy" width="800" height="533"></div></div><figcaption>Deigið, flatt út í höndunum.</figcaption></figure>
-      <figure class="reveal" data-in><div class="frame frame--4-3 frame--ruled"><div class="frame__clip"><img src="assets/img/w/pz-07-800.webp" srcset="assets/img/w/pz-07-800.webp 800w, assets/img/w/pz-07-1400.webp 1400w" sizes="(min-width:48em) 34vw, 100vw" alt="Sósa sett á pizzubotn á spaða" loading="lazy" width="800" height="533"></div></div><figcaption>Sósan, beint á botninn.</figcaption></figure>
-      <figure class="reveal" data-in><div class="frame frame--4-3 frame--ruled"><div class="frame__clip"><img src="assets/img/w/pz-01-800.webp" srcset="assets/img/w/pz-01-800.webp 800w, assets/img/w/pz-01-1400.webp 1400w" sizes="(min-width:48em) 24vw, 100vw" alt="Eldbökuð pizza með parmaskinku og klettasalati" loading="lazy" width="800" height="476"></div></div><figcaption>Parma, af matseðli.</figcaption></figure>
-    </div>
+  <!-- the standfirst: the masthead is the hero, this is the only text before the menu -->
+  <section class="stand" aria-label="Um Pizzasmiðjuna">
+    <p class="kicker">Hafnarstræti 92</p>
+    <p class="stand__lead">Deigið er hnoðað og kastað á staðnum.</p>
+    <p class="stand__sub">Bakað í eldofni og borið fram á Bautanum allan daginn.</p>
+    <a class="btn" href="#matsedill">Skoða matseðil</a>
   </section>
 
   <!-- the thirteen, as classified ads -->
-  <div class="brk" role="presentation"><i class="brk__r rule"></i><span class="brk__m" aria-hidden="true">✦</span><i class="brk__r rule"></i></div>
 <section class="sec" id="matsedill">
     <div class="sec__head" data-reveal-group>
       <p class="kicker">Matseðill</p>
       <h2 class="display h2" data-words>Þrettán pizzur.<br>Finndu þína uppáhalds.</h2>
-      <p class="dek">Pizzurnar okkar eru bakaðar í eldofni í Hafnarstræti 92 og bornar fram á Bautanum allan daginn. Skoðaðu úrvalið og veldu þá sem freistar þín.</p>
+      <p class="dek">Veldu eftir hráefni, eða flettu í gegnum allar þrettán.</p>
     </div>
     <div class="menu-search" hidden><label for="pizza-search">Finndu þína pizzu</label><input id="pizza-search" name="q" type="search" placeholder="T.d. Parma eða mozzarella…" autocomplete="off" aria-controls="pizza-results"></div><div class="menu-categories pizza-categories" role="group" aria-label="Pizzuflokkar"><button type="button" data-menu-filter="all" aria-pressed="false">Allar</button><button type="button" data-menu-filter="classic" aria-pressed="false">Klassískar</button><button type="button" data-menu-filter="special" aria-pressed="false">Sérpizzur</button></div><p class="menu-count" aria-live="polite"></p><div class="ads ads--4" id="pizza-results" data-menu-browser data-reveal-group>
       <article data-menu-category="classic" class="ad"><figure class="pizza-cutout"><img src="assets/img/pizzas/cutouts/pizza-01-margarita-800.webp" srcset="assets/img/pizzas/cutouts/pizza-01-margarita-420.webp 420w, assets/img/pizzas/cutouts/pizza-01-margarita-800.webp 800w" sizes="(min-width:62em) 20vw, 44vw" alt="" width="800" height="800" loading="lazy" decoding="async"></figure><span class="ad__no">Nr. 1</span><h3 class="ad__n">Margarita <span class="num">2.999 kr.</span></h3><details class="pizza-ingredients"><summary>Hráefni</summary><p>Sósa, mozzarella og basil.</p></details></article>

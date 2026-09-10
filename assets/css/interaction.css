@@ -330,24 +330,22 @@
   #auglysingar .ad,#auglysingar .ad__n,#auglysingar .ad .btn::before,#auglysingar .ad .btn::after{transition:none}
 }
 
-/* ---------- 5. the Pizzasmiðjan diptych ----------
-   Two of their own photographs at one size: the hands that throw the dough and
-   the fire that bakes it, which is the whole proposition in two frames. Both
-   are anchored on the same dark warm ground, so the pair reads as one spread
-   rather than as two pictures that happen to be adjacent. The caption sits
-   under a rule beneath them, so the hero itself is the photography. */
-.duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.4rem,.9vw,.9rem);
-  margin-block:0 clamp(1.75rem,3.5vw,3rem)}
-.duo__f{margin:0;overflow:hidden;background:var(--paper-2);aspect-ratio:3/2;min-width:0}
-.duo__f img{width:100%;height:100%;object-fit:cover;display:block}
-.duo__cap{grid-column:1/-1;display:grid;gap:.7rem;justify-items:start;max-width:54rem;
-  margin-top:clamp(.9rem,1.8vw,1.5rem);padding-top:clamp(1rem,2vw,1.6rem);
-  border-top:1px solid var(--red)}
-.duo__cap .kicker{margin:0}
-.duo__cap h2{margin:0;font-family:var(--serif);font-weight:600;letter-spacing:-.03em;
-  line-height:1.12;font-size:clamp(1.7rem,3.4vw,2.85rem);color:var(--red-ink);text-wrap:balance}
-.duo__cap>p:not(.kicker){margin:0;font-size:clamp(1rem,1.2vw,1.125rem);line-height:1.62;
-  color:var(--ink-66);max-width:48ch}
-.duo__cap .btn{margin-top:.4rem}
-/* Below 34em each half would be 170px wide, which is not a photograph any more. */
-@media(max-width:33.99em){.duo{grid-template-columns:1fr;gap:.5rem}.duo__f{aspect-ratio:4/3}}
+/* ---------- 5. the Pizzasmidjan standfirst ----------
+   The page is now the masthead, one block of text, and the thirteen pizzas.
+   No photography above the menu: the pizzas ARE the photography on this page,
+   and a hero picture above them was competing with the product it introduces.
+   So the standfirst does what a standfirst does — say what the place is in two
+   lines and hand the reader to the menu. */
+/* the rule spans the measure, the way a masthead rule does; only the type is
+   held to a reading width. Constraining the section instead cut the rule off
+   two thirds of the way across. */
+.stand{display:grid;gap:.75rem;justify-items:start;
+  border-top:1px solid var(--red);margin-top:clamp(.4rem,1.2vw,1rem);
+  padding-block:clamp(1.25rem,2.6vw,2.25rem) 0}
+.stand .kicker{margin:0}
+.stand__lead{margin:0;font-family:var(--serif);font-weight:600;letter-spacing:-.03em;
+  line-height:1.1;font-size:clamp(1.75rem,4vw,3.25rem);color:var(--red-ink);
+  max-width:22ch;text-wrap:balance}
+.stand__sub{margin:0;font-size:clamp(1.0625rem,1.35vw,1.25rem);line-height:1.6;
+  color:var(--ink-66);max-width:46ch}
+.stand .btn{margin-top:.6rem}
