@@ -28,34 +28,7 @@
   .spice-library__index p{font-size:1rem}
 }
 
-/* The three related destinations are editorial routes, rather than a generic link list. */
-.b-rub23 #heimsokn .sibs{counter-reset:sibling;display:grid;grid-template-columns:1fr;gap:0;border:0;background:transparent}
-.b-rub23 #heimsokn .sib{counter-increment:sibling;position:relative;isolation:isolate;min-height:10.5rem;padding:0;display:grid;grid-template-columns:minmax(9rem,.78fr) minmax(0,1.22fr);gap:clamp(1rem,2vw,2rem);align-items:center;overflow:hidden;border-top:1px solid var(--hair-2);background:var(--paper);transition:none}
-.b-rub23 #heimsokn .sib:last-child{border-bottom:1px solid var(--hair-2)}
-.b-rub23 #heimsokn .sib::before{content:'';grid-column:1;grid-row:1;height:100%;align-self:stretch;background:center / cover no-repeat;transform:scale(1.01);transition:transform 240ms cubic-bezier(.22,1,.36,1)}
-.b-rub23 #heimsokn .sib:nth-child(1)::before{background-image:url('../img/w/baut-01-800.webp')}
-.b-rub23 #heimsokn .sib:nth-child(2)::before{background-image:url('../img/w/pz-01-800.webp')}
-.b-rub23 #heimsokn .sib:nth-child(3)::before{background-image:url('../img/w/k6-02-800.webp')}
-.b-rub23 #heimsokn .sib__n,.b-rub23 #heimsokn .sib__t{grid-column:2;margin:0;position:relative;z-index:1}
-.b-rub23 #heimsokn .sib__n{align-self:end;padding-right:1.25rem;font:500 clamp(1.55rem,2.2vw,2.2rem)/1 var(--serif);letter-spacing:-.04em;text-transform:none;color:var(--ink);transition:transform 220ms cubic-bezier(.22,1,.36,1)}
-.b-rub23 #heimsokn .sib__n::before{content:counter(sibling,decimal-leading-zero);display:block;margin-bottom:.48rem;font:500 .7rem/1 var(--sans);letter-spacing:.12em;color:var(--red-ink)}
-.b-rub23 #heimsokn .sib__t{align-self:start;padding:0 3rem 0 0;font:400 1rem/1.45 var(--text);font-style:normal;color:var(--ink-66)}
-.b-rub23 #heimsokn .sib__t::after{content:'';display:inline-block;width:2.25rem;height:1px;margin:0 0 .28em .75rem;background:currentColor;vertical-align:middle;transform:scaleX(.65);transform-origin:left;transition:transform 180ms cubic-bezier(.22,1,.36,1)}
-@media(hover:hover) and (pointer:fine){
-  .b-rub23 #heimsokn .sib:hover{background:var(--paper)}
-  .b-rub23 #heimsokn .sib:hover::before{transform:scale(1.055)}
-  .b-rub23 #heimsokn .sib:hover .sib__n{transform:translate3d(.35rem,0,0);color:var(--red-ink)}
-  .b-rub23 #heimsokn .sib:hover .sib__t::after{transform:scaleX(1)}
-}
-.b-rub23 #heimsokn .sib:focus-visible::before{transform:scale(1.04)}
-.b-rub23 #heimsokn .sib:focus-visible .sib__n{transform:translate3d(.35rem,0,0);color:var(--red-ink)}
-.b-rub23 #heimsokn .sib:focus-visible .sib__t::after{transform:scaleX(1)}
-@media(max-width:47.99em){
-  .b-rub23 #heimsokn .sib{min-height:10rem;grid-template-columns:minmax(7.5rem,.72fr) minmax(0,1.28fr);gap:1rem}
-  .b-rub23 #heimsokn .sib__n{font-size:1.65rem;padding-right:.75rem}
-  .b-rub23 #heimsokn .sib__t{padding-right:.75rem;font-size:.95rem}
-}
-@media(prefers-reduced-motion:reduce){
-  .b-rub23 #heimsokn .sib::before,.b-rub23 #heimsokn .sib__n,.b-rub23 #heimsokn .sib__t::after{transition:none}
-  .b-rub23 #heimsokn .sib:hover::before,.b-rub23 #heimsokn .sib:focus-visible::before{transform:none}
-}
+/* The #heimsokn sibling override lived here. Superseded 2026-09-10 by the shared
+   .sibs index in showcase.css: the photo was pinned to grid-row 1 while the text
+   spanned two rows, so it could only ever render as a letterbox strip, and the
+   nth-child background images broke the moment the destination order changed. */

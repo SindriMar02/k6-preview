@@ -27,13 +27,19 @@
 .venues__heading h2{font:500 clamp(32px,3.5vw,54px)/1.15 var(--serif);letter-spacing:-.035em;margin:0;color:var(--ink)}
 .venues__heading>p{font:400 19px/1.5 var(--text);margin:0 0 4px;color:var(--ink-66)}
 .venues__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
-.venue{--venue-ease:cubic-bezier(.22,1,.36,1);min-width:0}
+.venue{--venue-ease:cubic-bezier(.22,1,.36,1);min-width:0;position:relative}
 .venue__photo{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:var(--paper-2);isolation:isolate}
+/* The 01/02/03 index sits on whatever the photograph happens to be. On the Bautinn
+   sunset it landed white-on-pale-sky at 1.19:1, so the corner carries its own scrim
+   rather than trusting the picture. */
+.venue__photo{--num-scrim:1}
+.venue::before{content:'';position:absolute;top:0;left:0;width:44%;height:34%;z-index:1;pointer-events:none;
+  background:linear-gradient(150deg,rgba(18,15,13,.62),rgba(18,15,13,.28) 46%,transparent 78%)}
 .venue__photo::before,.venue__photo::after{content:'';position:absolute;pointer-events:none;z-index:1}
 .venue__photo::before{inset:0;background:linear-gradient(115deg,rgba(20,17,15,.34),transparent 46%);opacity:0;transition:opacity 220ms var(--venue-ease)}
 .venue__photo::after{inset:12px;border:1px solid rgba(247,244,236,.84);opacity:0;transform:scale(.975);transition:transform 280ms var(--venue-ease),opacity 180ms linear}
 .venue__photo img{position:relative;z-index:0;width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.001);transition:transform 280ms var(--venue-ease)}
-.venue__number{position:absolute;z-index:2;top:18px;left:18px;color:white;font:500 13px/1 var(--serif);text-shadow:0 1px 5px #000;transition:transform 240ms var(--venue-ease)}
+.venue__number{position:absolute;z-index:2;top:18px;left:18px;color:#fff;font:600 13px/1 var(--serif);text-shadow:0 1px 3px rgba(0,0,0,.85);transition:transform 240ms var(--venue-ease)}
 .venue__body{padding:28px 0 0;display:flex;flex-direction:column}
 .venue__brand{height:82px;display:flex;align-items:center;margin:0 0 24px}
 .venue__brand img{height:72px;width:180px;object-fit:contain;object-position:left center}
@@ -116,3 +122,42 @@
 .sndr__studio{font-family:var(--text);font-weight:500;font-size:10px;letter-spacing:.18em;line-height:1;opacity:.85}
 @media(hover:hover) and (pointer:fine){.sndr:hover{color:var(--red-ink)}}
 @media(max-width:767px){.foot__base{align-items:flex-start;flex-direction:column;gap:10px}.sndr{min-height:44px}}
+
+/* ---------- the sibling index: where else to eat in the family ----------
+   One pattern on every page. A real <img> per destination rather than nth-child
+   background images, so the row is responsive, lazy-loaded and survives a
+   reordering. No 01/02/03: three sibling restaurants are a set, not a sequence,
+   and a numbered marker on a set is decoration pretending to be information.
+   Each row carries its destination's OWN red in --sib-accent. */
+.sibs{display:grid;gap:0;background:transparent;border:0;border-top:1px solid var(--hair-2)}
+.sib{position:relative;display:grid;grid-template-columns:minmax(6.5rem,.42fr) minmax(0,1fr) auto;
+  align-items:center;gap:clamp(1rem,2.6vw,2.25rem);padding:clamp(.85rem,1.5vw,1.15rem) 0;
+  border-bottom:1px solid var(--hair-2);background:transparent;text-decoration:none;
+  transition:background 320ms var(--venue-ease,cubic-bezier(.22,1,.36,1))}
+.sib__fig{overflow:hidden;aspect-ratio:4/3;background:var(--paper-2);align-self:stretch;min-height:0}
+.sib__fig img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.01);
+  transition:transform 700ms cubic-bezier(.22,1,.36,1)}
+.sib__txt{display:grid;gap:.28rem;min-width:0}
+.sib__n{font:600 clamp(1.35rem,2.1vw,1.95rem)/1.1 var(--serif);letter-spacing:-.035em;
+  color:var(--ink);text-transform:none;transition:color 260ms ease}
+.sib__t{font:400 clamp(.875rem,1.05vw,1rem)/1.5 var(--text);color:var(--ink-66);font-style:normal}
+.sib__go{flex:none;width:2.5rem;height:1px;background:var(--hair-2);position:relative;
+  transition:background 260ms ease,width 420ms cubic-bezier(.22,1,.36,1)}
+.sib__go::after{content:'';position:absolute;right:0;top:50%;width:.5rem;height:.5rem;
+  border-top:1px solid currentColor;border-right:1px solid currentColor;
+  transform:translateY(-50%) rotate(45deg);color:var(--hair-2);transition:color 260ms ease}
+@media (hover:hover) and (pointer:fine){
+  .sib:hover{background:var(--red-wash)}
+  .sib:hover .sib__fig img{transform:scale(1.07)}
+  .sib:hover .sib__n{color:var(--sib-accent,var(--red-ink))}
+  .sib:hover .sib__go{width:3.75rem;background:var(--sib-accent,var(--red-ink))}
+  .sib:hover .sib__go::after{color:var(--sib-accent,var(--red-ink))}
+}
+.sib:focus-visible{outline:2px solid var(--sib-accent,var(--red));outline-offset:-2px}
+.sib:focus-visible .sib__n{color:var(--sib-accent,var(--red-ink))}
+.sib:focus-visible .sib__go{width:3.75rem;background:var(--sib-accent,var(--red-ink))}
+@media(max-width:47.99em){
+  .sib{grid-template-columns:minmax(5rem,.4fr) minmax(0,1fr);gap:1rem;padding:.8rem 0}
+  .sib__go{display:none}
+}
+@media(prefers-reduced-motion:reduce){.sib,.sib__fig img,.sib__n,.sib__go{transition:none}}
