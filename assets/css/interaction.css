@@ -553,8 +553,10 @@ body::before{inset:var(--sheet)}
    printed column. The caption column is paper like everything else, the
    photograph carries the brand's own red keyline, and the two are separated by a
    rule rather than by a change of shade. */
-.lead--uncropped{background:transparent;border-top:1px solid var(--red);border-bottom:2px solid var(--red);
-  align-items:stretch;gap:0}
+/* `.lead.lead--uncropped` (0,2,0) elsewhere beat a single-class override, which is
+   why the grey slab survived the first attempt — match its specificity. */
+.lead.lead--uncropped{background:transparent;border-top:1px solid var(--red);
+  border-bottom:2px solid var(--red);align-items:stretch;gap:0}
 .lead--uncropped .hero-media{align-self:stretch;overflow:hidden;background:var(--paper-2)}
 .lead--uncropped .hero-media img{height:100%;object-fit:cover}
 @media(min-width:48em){
