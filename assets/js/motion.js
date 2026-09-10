@@ -108,7 +108,6 @@
   function finishReveal(el) {
     el.dataset.entryState = 'done';
     el.classList.add('is-in');
-    if (el.matches('.pick')) el.classList.add('is-photo');
     var running=entryAnimations.get(el);
     if(running){entryAnimations.delete(el);running.cancel();activeAnimations.delete(running);}
     if (revealObserver) revealObserver.unobserve(el);
@@ -118,7 +117,6 @@
     if (RM || el.dataset.revealImmediate) { finishReveal(el); return; }
     el.dataset.entryState = 'playing';
     el.classList.add('is-in');
-    if (el.matches('.pick')) el.classList.add('is-photo');
     if (el.dataset.entryKind === 'rise' && el.animate) {
       var animation = el.animate([
         {opacity:0, transform:'translate3d(0,24px,0)'},

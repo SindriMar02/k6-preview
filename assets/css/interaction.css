@@ -142,17 +142,8 @@
 .booking__option:focus-visible::after{transform:scaleX(1)}
 .booking__option:focus-visible>span:last-child{transform:translate3d(.35rem,-.35rem,0)}
 
-/* 2h. the venue cards on the index: the whole card is the target, so the
-   whole card answers — not only the photograph the cursor happens to be
-   over. The visit rule extends toward the page it opens. */
-.venue__brand img{transition:transform var(--t4) var(--ease)}
-.venue__description,.venue__meta{transition:color var(--t3) var(--ease)}
-@media(hover:hover) and (pointer:fine){
-  .venue:hover .venue__photo img{transform:scale(1.05)}
-  .venue:hover .venue__brand img{transform:translateX(3px)}
-  .venue:hover .venue__visit::after{transform:scaleX(1)}
-  .venue:hover .venue__tagline{color:var(--red-ink)}
-}
+/* 2h. the venue cards are gone: `#stadirnir` was the same three choices the
+   picker hero now makes, so the section and its hover rules went with it. */
 
 /* 2i. the classified ads and the pizza cards: a red rule prints across
    the top of the card, the name takes the brand ink. */
@@ -188,7 +179,7 @@
 
 @media(prefers-reduced-motion:reduce){
   .btn,.btn::before,.stampbtn,.stampbtn::after,.roundbtn::before,.mast__logo,.link span,.link::after,
-  .booking__option,.booking__option::after,.booking__option>span:last-child,.venue__brand img,
+  .booking__option,.booking__option::after,.booking__option>span:last-child,
   .ad,.ad::before,.ad__n,.menu__list a::after,.film__ctrl,.dock a,.arrival-nav a,
   .foot li a::after,.foot .small a::after,.booking__note a::after,.foot__mail::after{transition:none}
 }
@@ -349,3 +340,162 @@
 .stand__sub{margin:0;font-size:clamp(1.0625rem,1.35vw,1.25rem);line-height:1.6;
   color:var(--ink-66);max-width:46ch}
 .stand .btn{margin-top:.6rem}
+
+/* ---------- 6. the picker: the index hero ----------
+   Three columns, one per house. The component has been in system.css since v2 and
+   was never instantiated in v3; `editorial.css` then set `.pick{transition:none}`
+   and `.pick__art{flex:none}`, which between them would have frozen the expansion
+   and stopped the art filling the column. Restored and retuned here.
+
+   Hovering a column grows it and the other two give up the space. Because the
+   columns are `flex:1 1 0`, hovering the MIDDLE one takes evenly from both sides
+   and the composition stays symmetrical; hovering an edge pushes into both of the
+   others. Nothing jumps: only flex-grow animates. */
+@media(min-width:48em){
+  .picker{min-height:min(76svh,46rem);gap:0;
+    border-top:2px solid var(--red);border-bottom:2px solid var(--red)}
+  .pick{border:0;transition:flex-grow 620ms cubic-bezier(.22,1,.36,1)}
+  .pick+.pick{border:0;border-left:1px solid var(--red)}
+  .pick__art{flex:1 1 0;min-height:0;aspect-ratio:auto}
+}
+@media(hover:hover) and (pointer:fine) and (min-width:48em){
+  /* 2.2 against 1 puts the hovered column at 52% and its neighbours at 24% each,
+     which is a push rather than a nudge. */
+  .picker:hover .pick{flex-grow:1}
+  .picker .pick:hover,.picker .pick:focus-within{flex-grow:2.2}
+}
+.pick__body{border-top:1px solid var(--red)}
+.pick__name a{position:static}
+.pick__name a::after{content:"";position:absolute;inset:0;z-index:3}
+@media(prefers-reduced-motion:reduce){.pick{transition:none}}
+
+/* the heading row above the columns */
+.picker-heading{padding:clamp(1.25rem,2.6vw,2.25rem) 0 clamp(.9rem,1.8vw,1.4rem);
+  align-items:baseline;gap:clamp(1rem,2.4vw,2.5rem)}
+.picker-heading__h{margin:0;font-family:var(--serif);font-weight:600;letter-spacing:-.03em;
+  line-height:1.12;font-size:clamp(1.5rem,2.8vw,2.4rem);color:var(--red-ink);text-wrap:balance}
+.picker-heading .small{font-style:normal;color:var(--ink-66);text-align:right;flex:none}
+@media(max-width:47.99em){
+  .picker-heading{flex-direction:column;align-items:flex-start;gap:.5rem;padding-top:1rem}
+  .picker-heading .small{text-align:left}
+  .picker{min-height:0}
+  .pick__art{aspect-ratio:16/11}
+}
+
+/* Photographs at rest, not engravings.
+   I tried resting each column as its own photograph redrawn in that house's ink,
+   which is a lovely idea and a legibility failure: at a 5px line pitch the 1902
+   timber house and the oven mouth both collapse into abstract horizontal streaks,
+   and a hero has to read. The reference does not engrave ITS photographs either —
+   it runs photographs as photographs and separate line DRAWINGS as ornament.
+   The drawings belong in the ornament slots, not over the pictures. */
+.pick__art img:not(.pick__logo){opacity:1;transform:scale(1)}
+.pick__art canvas{display:none}
+.pick__logo{opacity:1;transform:none}
+@media(hover:hover) and (pointer:fine){
+  .pick:hover .pick__art img:not(.pick__logo),
+  .pick:focus-within .pick__art img:not(.pick__logo){transform:scale(1.03)}
+}
+.pick__art img:not(.pick__logo){transition:transform 1.2s cubic-bezier(.22,1,.36,1),opacity var(--t6) var(--ease)}
+
+/* ---------- 7. the sheet: paper laid on a ground ----------
+   The single strongest idea in the reference. Measured there: the sheet is inset
+   32px from the viewport on a 1440 screen, `#F9F8F2`, and a fixed patterned
+   backdrop shows in the margin, so the page reads as a printed thing lying on a
+   surface rather than as a browser window.
+
+   Ours is built the same way but the ground is NOT their damask: an Italian
+   wallpaper under an Akureyri grill house would be somebody else's story. The
+   ground is a dark warm surface — the table the paper is lying on.
+
+   Every fixed layer has to be inset by the same amount or it overhangs the sheet
+   and gives the game away: the rails, the sticky bar, the phone dock, the menu
+   and the paper's own noise plate all move in by --sheet. */
+:root{
+  --sheet:clamp(5px,1.5vw,26px);
+  --ground:#17120F;
+}
+html{background:var(--ground)}
+body{
+  margin:var(--sheet);
+  min-height:calc(100svh - var(--sheet) * 2);
+  box-shadow:0 1px 2px rgba(0,0,0,.30), 0 26px 64px -26px rgba(0,0,0,.62);
+}
+/* the ground: a warm dark surface, lit slightly from the top left, with the same
+   printed grain the paper uses so the two read as one photograph of a table. */
+html::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 12% 0%, rgba(122,86,64,.30), transparent 62%),
+    radial-gradient(100% 80% at 92% 100%, rgba(60,32,26,.42), transparent 58%),
+    var(--ground);
+}
+html::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .92 0 0 0 0 .84 0 0 0 .10 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")}
+/* the paper's own grain stops at the paper's edge */
+body::before{inset:var(--sheet)}
+.rail{top:var(--sheet);bottom:var(--sheet)}
+.rail--l{left:calc(var(--sheet) + var(--rail))}
+.rail--r{right:calc(var(--sheet) + var(--rail))}
+.bar{top:var(--sheet);left:var(--sheet);right:var(--sheet)}
+.dock{left:var(--sheet);right:var(--sheet);bottom:var(--sheet)}
+.menu{inset:var(--sheet);width:auto;height:auto;max-width:none;max-height:none}
+.skip{left:calc(var(--sheet) + var(--pad))}
+/* -105% used to clear the viewport top; with the bar inset by --sheet it no longer
+   does, and the bar peeked over the paper's edge at rest. */
+.bar{transform:translateY(calc(-100% - var(--sheet) - 4px))}
+.bar.is-on,.bar[data-shown],.is-barred .bar{transform:translateY(0)}
+/* The sheet's TOP edge scrolls away — only its sides persist, which is exactly how
+   the reference behaves. So a bar held --sheet below the viewport top leaves a live
+   strip of scrolling content above it. Both fixed chromes sit flush to the viewport
+   edge and carry the inset as padding instead; the sides stay inset so the ground
+   still runs down both margins. */
+.bar{top:0;padding-top:calc(.35rem + var(--sheet));transform:translateY(-101%)}
+.bar.is-on{transform:translateY(0)}
+.dock{bottom:0;padding-bottom:calc(var(--sheet) + env(safe-area-inset-bottom))}
+
+/* ---------- 8. the plates: engraved drawings ----------
+   The reference carries Victorian catalogue engravings on the paper — a menu on a
+   plate, an antique telephone, a Bellini glass — and they are the thing that makes
+   it read as a printed object rather than a website with a texture on it.
+
+   Ours are generated to match that language but drawn from K6's OWN world: a
+   grilled steak for the house that has grilled since 1971, a sushi plate for
+   Rub 23, the wood-fired oven for Pizzasmiðjan, a banquet cloche for the catering.
+   Black ink on white, dropped into the paper with `multiply` rather than matted to
+   transparency — the white simply disappears into whatever it is laid on, and the
+   hatching keeps its full tonal range instead of picking up a halo. */
+.plate{margin:0;display:block;line-height:0}
+.plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+@media(prefers-reduced-motion:no-preference){
+  .plate img{transition:transform 900ms cubic-bezier(.22,1,.36,1)}
+}
+
+/* Pizzasmiðjan: the page is masthead, text, menu — no photography above the
+   thirteen. The oven is a drawing, not a photograph, so it gives the standfirst
+   a companion without competing with the product underneath it. */
+@media(min-width:60em){
+  .b-pizzasmidjan .stand{grid-template-columns:minmax(0,1fr) minmax(14rem,22rem);
+    column-gap:clamp(2rem,5vw,5rem);align-items:start}
+  .b-pizzasmidjan .stand>:not(.plate){grid-column:1}
+  .b-pizzasmidjan .stand .plate{grid-column:2;grid-row:1/span 4;align-self:center;
+    justify-self:end;max-width:22rem}
+}
+@media(max-width:59.99em){
+  .b-pizzasmidjan .stand .plate{max-width:15rem;margin-top:.5rem;justify-self:start}
+}
+
+/* a drawing set beside a section head */
+.sec__head--plate{display:grid;gap:clamp(1rem,2.4vw,2rem);align-items:center}
+@media(min-width:60em){
+  .sec__head--plate{grid-template-columns:minmax(0,1fr) minmax(10rem,17rem)}
+  .sec__head--plate .plate{grid-row:1/span 3;grid-column:2;justify-self:end;max-width:17rem}
+  .sec__head--plate>:not(.plate){grid-column:1}
+}
+@media(max-width:59.99em){.sec__head--plate .plate{max-width:11rem}}
+/* a drawing used as a printer's ornament introducing a section — on PAPER.
+   `multiply` only works on a light ground: on the red catering panel it turned the
+   ink to black-on-red and swamped the heading, so the mark sits above the panel. */
+.plate--mark{max-width:clamp(7rem,14vw,13rem);margin:0 0 clamp(1rem,2vw,1.75rem) auto}
+@media(max-width:47.99em){.plate--mark{max-width:7.5rem;margin-inline:0 auto}}

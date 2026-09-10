@@ -16,7 +16,7 @@
   .mast__logo{justify-self:start}
   .mast__nav,.bar__mid{display:none}
 }
-.b-k6 .masthead{display:none}
+/* the index masthead used to be hidden here; the K6 word is the h1 now */
 .b-k6 .film{margin-top:20px;height:clamp(500px,70svh,780px)}
 .b-k6 .film__word{text-transform:none;font-weight:550;font-size:clamp(40px,5vw,76px);line-height:1.13;text-wrap:balance}
 .b-k6 .film__word em{font-style:normal;font-weight:450}

@@ -18,8 +18,8 @@
 <link rel="stylesheet" href="assets/css/editorial.css?v=507259a4">
 <link rel="stylesheet" href="assets/css/type-and-menu.css?v=b4243ab7">
 <link rel="stylesheet" href="assets/css/mobile-experience.css?v=7d18c7a7">
-<link rel="stylesheet" href="assets/css/showcase.css?v=d8eb4386">
-<link rel="stylesheet" href="assets/css/interaction.css?v=9f1a94e6">
+<link rel="stylesheet" href="assets/css/showcase.css?v=bb9f3d00">
+<link rel="stylesheet" href="assets/css/interaction.css?v=5dd69cbd">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"K6 veitingar","legalName":"K6 ehf.","taxID":"620310-0850","url":"https://k6veitingar.is/",
 "address":{"@type":"PostalAddress","streetAddress":"Kaupvangsstræti 6","postalCode":"600","addressLocality":"Akureyri","addressCountry":"IS"},
@@ -64,58 +64,54 @@
 
   <!-- the masthead word: the one marquee on the page, stamped -->
   <section class="masthead" aria-label="K6 veitingar">
-    <p class="wordmark">K6 veitingar</p>
+    <h1 class="wordmark">K6 veitingar</h1>
 
   </section>
 <nav class="arrival-nav" aria-label="Flýtileiðir á síðunni"><a href="#stadirnir">Staðirnir</a><a href="#bokabord">Borð</a><a href="#veislur">Veislur</a></nav>
 
 
-  <!-- Real restaurant photographs; stationary images with gentle crossfades. -->
-  <section class="film" aria-label="Úr eldhúsunum">
-    <div class="hero-media" data-slideshow aria-label="Ljósmyndir frá Bautanum, Rub 23 og Pizzasmiðjunni">
-      <img class="hero-slide is-current" alt="Bautinn í Hafnarstræti" data-place="Bautinn" fetchpriority="high" sizes="100vw" src="assets/img/enhanced/bautinn-1200.webp" srcset="assets/img/enhanced/bautinn-1200.webp 1200w, assets/img/enhanced/bautinn-2400.webp 2400w" width="1200" height="1200">
-      <img class="hero-slide" alt="Sushi á Rub 23" data-place="Rub 23" decoding="async" aria-hidden="true" sizes="100vw" src="assets/img/enhanced/rub23-1200.webp" srcset="assets/img/enhanced/rub23-1200.webp 1200w, assets/img/enhanced/rub23-2400.webp 2400w" width="1200" height="801">
-      <img class="hero-slide" sizes="100vw" alt="Eldofn Pizzasmiðjunnar" data-place="Pizzasmiðjan" decoding="async" aria-hidden="true" src="assets/img/enhanced/pizza-1200.webp" srcset="assets/img/enhanced/pizza-1200.webp 1200w, assets/img/enhanced/pizza-2400.webp 2400w" width="1200" height="958">
-    </div>
-    <div class="film__title"><p class="kicker">Í hjarta Akureyrar</p><h1 class="film__word">Þrír staðir.<br><em>Hver með sinn karakter.</em></h1><a class="btn btn--paper" href="#stadirnir">Skoða staðina</a></div>
-    <div class="film__foot">
-      <p class="kicker"><span data-slide-label>Bautinn</span> · Akureyri</p>
-      <div class="film__controls"><button class="film__ctrl" type="button" data-slide-pause hidden>Gera hlé</button><button class="film__ctrl" type="button" data-slide-next hidden aria-label="Næsta ljósmynd">Næsta <span aria-hidden="true">→</span></button></div>
-    </div>
+  <!-- the hero: three columns, one per house. Each shows its photograph as an ink
+       engraving in its OWN red and hands over the real photograph on hover. -->
+  <div class="picker-heading">
+    <div><p class="kicker">Staðirnir okkar</p><h2 class="picker-heading__h">Ólíkir staðir. Sama gestrisnin.</h2></div>
+    <p class="small">Finndu stað fyrir þína stund.</p>
+  </div>
+  <section class="picker" id="stadirnir" aria-label="Staðirnir okkar">
+      <article class="pick pick--bautinn" style="--pk:#840C0E">
+        <div class="pick__art">
+          <img alt="Bautinn í Hafnarstræti 92, húsi frá 1902" fetchpriority="high" sizes="(min-width:48em) 34vw, 100vw" src="assets/img/enhanced/bautinn-1200.webp" srcset="assets/img/enhanced/bautinn-1200.webp 1200w, assets/img/enhanced/bautinn-2400.webp 2400w" width="1200" height="1200">
+          <img class="pick__logo" src="assets/img/logo-bautinn-bone.svg" alt="" aria-hidden="true" width="240" height="100" loading="lazy">
+        </div>
+        <div class="pick__body">
+          <h2 class="pick__name"><a href="bautinn.html">Bautinn</a></h2>
+          <p class="pick__dek">Grillhúsið í hjarta bæjarins.</p>
+          <p class="pick__meta"><span>Hafnarstræti 92</span><span>Síðan 1971</span></p>
+        </div>
+      </article>
+      <article class="pick pick--rub23" style="--pk:#B0141A">
+        <div class="pick__art">
+          <img alt="Sushi borið fram á Rub 23" decoding="async" sizes="(min-width:48em) 34vw, 100vw" src="assets/img/enhanced/rub23-1200.webp" srcset="assets/img/enhanced/rub23-1200.webp 1200w, assets/img/enhanced/rub23-2400.webp 2400w" width="1200" height="801">
+          <img class="pick__logo" src="assets/img/logo-rub23-bone.svg" alt="" aria-hidden="true" width="240" height="100" loading="lazy">
+        </div>
+        <div class="pick__body">
+          <h2 class="pick__name"><a href="rub23.html">Rub 23</a></h2>
+          <p class="pick__dek">Sjávarréttir, kjöt og krydd.</p>
+          <p class="pick__meta"><span>Kaupvangsstræti 6</span><span>Síðan 2008</span></p>
+        </div>
+      </article>
+      <article class="pick pick--pizzasmidjan" style="--pk:#9C0B1A">
+        <div class="pick__art">
+          <img alt="Pizza bakast í eldofni Pizzasmiðjunnar, logar í ofnmunnanum" decoding="async" sizes="(min-width:48em) 34vw, 100vw" src="assets/img/w/pz-09-1400.webp" srcset="assets/img/w/pz-09-800.webp 800w, assets/img/w/pz-09-1400.webp 1400w" width="1400" height="933">
+          <img class="pick__logo" src="assets/img/logo-pizzasmidjan-bone.svg" alt="" aria-hidden="true" width="240" height="100" loading="lazy">
+        </div>
+        <div class="pick__body">
+          <h2 class="pick__name"><a href="pizzasmidjan.html">Pizzasmiðjan</a></h2>
+          <p class="pick__dek">Eldbakað, beint úr ofninum.</p>
+          <p class="pick__meta"><span>Hafnarstræti 92</span><span>Síðan 2019</span></p>
+        </div>
+      </article>
   </section>
 
-  <section class="venues" id="stadirnir" aria-labelledby="venues-title">
-    <div class="venues__heading"><div><p class="kicker">Staðirnir okkar</p><h2 id="venues-title">Ólíkir staðir.<br>Sama gestrisnin.</h2></div><p>Finndu stað fyrir þína stund.<br>Skoðaðu matseðilinn og komdu við.</p></div>
-    <div class="venues__grid">
-      <article class="venue venue--bautinn" data-rise>
-        <a class="venue__photo" href="bautinn.html" aria-label="Skoða Bautann"><img alt="Bautinn í Hafnarstræti" loading="lazy" decoding="async" sizes="(min-width: 1100px) 31vw, (min-width: 768px) 32vw, 100vw" src="assets/img/enhanced/bautinn-1200.webp" srcset="assets/img/enhanced/bautinn-1200.webp 1200w, assets/img/enhanced/bautinn-2400.webp 2400w" width="1200" height="1200"><span class="venue__number" aria-hidden="true">01</span></a>
-        <div class="venue__body">
-          <h3 class="venue__brand"><img src="assets/img/logo-bautinn.svg" alt="Bautinn" width="240" height="100" loading="lazy"></h3>
-          <p class="venue__tagline">Grillhúsið í hjarta bæjarins</p><p class="venue__description">Góður matur og hlýjar móttökur í einu af elstu húsum Akureyrar.</p>
-          <p class="venue__meta"><span>Hafnarstræti 92</span><span>Síðan 1971</span></p>
-          <div class="venue__links"><a class="venue__visit" href="bautinn.html">Skoða staðinn</a><a href="bautinn.html#matsedill">Matseðill</a></div>
-        </div>
-      </article>
-      <article class="venue venue--rub23" data-rise>
-        <a class="venue__photo" href="rub23.html" aria-label="Skoða Rub 23"><img alt="Sushi borið fram á Rub 23" loading="lazy" decoding="async" sizes="(min-width: 1100px) 31vw, (min-width: 768px) 32vw, 100vw" src="assets/img/enhanced/rub23-1200.webp" srcset="assets/img/enhanced/rub23-1200.webp 1200w, assets/img/enhanced/rub23-2400.webp 2400w" width="1200" height="801"><span class="venue__number" aria-hidden="true">02</span></a>
-        <div class="venue__body">
-          <h3 class="venue__brand"><img src="assets/img/logo-rub23.svg" alt="Rub 23" width="240" height="100" loading="lazy"></h3>
-          <p class="venue__tagline">Sjávarréttir. Sushi. Krydd.</p><p class="venue__description">Veldu hráefni og krydd að þínum smekk, eða leyfðu kokkunum að velja.</p>
-          <p class="venue__meta"><span>Kaupvangsstræti 6</span><span>Síðan 2008</span></p>
-          <div class="venue__links"><a class="venue__visit" href="rub23.html">Skoða staðinn</a><a href="rub23.html#matsedill">Matseðill</a></div>
-        </div>
-      </article>
-      <article class="venue venue--pizzasmidjan" data-rise>
-        <a class="venue__photo" href="pizzasmidjan.html" aria-label="Skoða Pizzasmiðjuna"><img alt="Pizza í eldofni Pizzasmiðjunnar" loading="lazy" decoding="async" sizes="(min-width: 1100px) 31vw, (min-width: 768px) 32vw, 100vw" src="assets/img/enhanced/pizza-1200.webp" srcset="assets/img/enhanced/pizza-1200.webp 1200w, assets/img/enhanced/pizza-2400.webp 2400w" width="1200" height="958"><span class="venue__number" aria-hidden="true">03</span></a>
-        <div class="venue__body">
-          <h3 class="venue__brand"><img src="assets/img/logo-pizzasmidjan.svg" alt="Pizzasmiðjan" width="240" height="100" loading="lazy"></h3>
-          <p class="venue__tagline">Beint úr eldofninum</p><p class="venue__description">Stökkar, eldbakaðar pizzur sem þú nýtur í sal Bautans.</p>
-          <p class="venue__meta"><span>Hafnarstræti 92</span><span>Síðan 2019</span></p>
-          <div class="venue__links"><a class="venue__visit" href="pizzasmidjan.html">Skoða staðinn</a><a href="pizzasmidjan.html#matsedill">Matseðill</a></div>
-        </div>
-      </article>
-    </div>
-  </section>
   <div class="brk" role="presentation"><i class="brk__r rule"></i><span class="brk__m" aria-hidden="true">✦</span><i class="brk__r rule"></i></div>
 <section class="sec booking" id="bokabord" aria-labelledby="booking-title"><div class="booking__intro"><p class="kicker">Veldu stað</p><h2 class="display h2" id="booking-title">Hvar viltu borða?</h2><p class="body">Hvort langar þig á Rub 23 eða Bautann? Pizzurnar frá Pizzasmiðjunni eru líka bornar fram á Bautanum.</p></div><div class="booking__options"><a class="booking__option" href="https://www.dineout.is/is/rub23?isolation=true" data-booking="rub23"><span><strong>Rub 23</strong><small>Fiskur, kjöt og sushi · bóka borð</small></span><span aria-hidden="true">↗</span></a><a class="booking__option" href="bautinn.html#bokabord"><span><strong>Bautinn og Pizzasmiðjan</strong><small>Grillréttir og eldbakaðar pizzur · borð og opnunartímar</small></span><span aria-hidden="true">↗</span></a><p class="booking__note">Veisla eða einkahóf? <a href="#veislur">Skoða veisluþjónustu</a></p></div></section>
   <!-- the people: one story, drop cap, a facts box -->
@@ -146,6 +142,7 @@
 
   <!-- catering: the inverted panel -->
   <section class="sec sec--tight" id="veislur">
+    <figure class="plate plate--mark" aria-hidden="true"><img src="assets/img/draw/eng-veisla-800.webp" srcset="assets/img/draw/eng-veisla-400.webp 400w, assets/img/draw/eng-veisla-800.webp 800w" sizes="(min-width:60em) 14rem, 40vw" alt="" loading="lazy" decoding="async"></figure>
     <div class="panel panel--photo" data-in>
       <div class="panel__in" data-reveal-group>
         <p class="kicker">Veisluþjónusta</p>
@@ -182,11 +179,11 @@
 
     <p class="foot__word" aria-hidden="true">K6 veitingar</p>
 
-    <div class="foot__base"><p class="foot__note">Frumgerð, ekki opinber vefsíða. Efni, myndir og merki frá K6 veitingum.</p><a class="sndr" href="https://sndrstudio.is" target="_blank" rel="noopener" aria-label="Hannað af SNDR Studio" data-logotype><span class="sndr__mark">SN<i>✦</i>DR</span><span class="sndr__studio">STUDIO</span></a></div>
+    <div class="foot__base"><p class="foot__note">Frumgerð, ekki opinber vefsíða. Efni, myndir og merki frá K6 veitingum. Skreytiteikningar eru stílfærðar.</p><a class="sndr" href="https://sndrstudio.is" target="_blank" rel="noopener" aria-label="Hannað af SNDR Studio" data-logotype><span class="sndr__mark">SN<i>✦</i>DR</span><span class="sndr__studio">STUDIO</span></a></div>
   </footer>
 </main>
 
 <nav class="dock" aria-label="Flýtileiðir"><a href="#stadirnir">Staðirnir</a><a href="#bokabord">Finna borð</a><a href="#veislur">Veislur</a></nav>
-<script src="assets/js/motion.js?v=8e75b182" defer></script>
+<script src="assets/js/motion.js?v=047ef036" defer></script>
 </body>
 </html>
